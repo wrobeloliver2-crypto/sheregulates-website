@@ -1,0 +1,921 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Atemschule – She Regulates</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Jost:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --rose: #d9a49a;
+    --rose-light: #f0dbd7;
+    --rose-dark: #b8807a;
+    --cream: #faf7f3;
+    --cream-dark: #f0ebe2;
+    --sage: #7d9e8c;
+    --sage-light: #a8c4b4;
+    --charcoal: #2a2520;
+    --warm-grey: #8a8078;
+    --white: #ffffff;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'Jost', sans-serif;
+    background: var(--cream);
+    color: var(--charcoal);
+    font-weight: 300;
+    overflow-x: hidden;
+  }
+
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    background: var(--charcoal);
+    padding: 20px 48px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .nav-logo {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 22px;
+    font-weight: 400;
+    letter-spacing: 3px;
+    color: var(--white);
+    text-decoration: none;
+    text-transform: uppercase;
+  }
+
+  .nav-links {
+    display: flex;
+    gap: 36px;
+    list-style: none;
+  }
+
+  .nav-links a {
+    font-size: 12px;
+    letter-spacing: 2.5px;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.6);
+    text-decoration: none;
+    transition: color 0.3s;
+  }
+
+  .nav-links a:hover, .nav-links a.active { color: var(--rose); }
+
+  .nav-cta {
+    font-size: 11px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--white) !important;
+    background: var(--rose);
+    padding: 10px 22px;
+    border-radius: 30px;
+    text-decoration: none;
+    transition: background 0.3s;
+  }
+
+  .nav-cta:hover { background: var(--rose-dark) !important; }
+
+  /* HERO */
+  .page-hero {
+    background: var(--charcoal);
+    padding: 160px 48px 100px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .page-hero::before {
+    content: '';
+    position: absolute;
+    top: -100px; right: -100px;
+    width: 500px; height: 500px;
+    border-radius: 50%;
+    background: var(--rose);
+    opacity: 0.05;
+  }
+
+  .hero-inner {
+    max-width: 1100px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 80px;
+    align-items: center;
+  }
+
+  .page-eyebrow {
+    font-size: 11px;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    color: var(--rose);
+    margin-bottom: 20px;
+    display: block;
+  }
+
+  .page-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(48px, 6vw, 80px);
+    font-weight: 300;
+    color: var(--white);
+    line-height: 1.05;
+    margin-bottom: 24px;
+  }
+
+  .page-title em { font-style: italic; color: var(--rose-light); }
+
+  .page-lead {
+    font-size: 17px;
+    line-height: 1.85;
+    color: rgba(255,255,255,0.55);
+    margin-bottom: 36px;
+  }
+
+  .hero-pills {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+    margin-bottom: 40px;
+  }
+
+  .pill {
+    font-size: 11px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    border: 1px solid rgba(255,255,255,0.2);
+    padding: 8px 18px;
+    border-radius: 20px;
+    color: rgba(255,255,255,0.6);
+  }
+
+  .hero-btn {
+    display: inline-block;
+    background: var(--rose);
+    color: var(--white);
+    font-size: 12px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    padding: 16px 36px;
+    border-radius: 40px;
+    text-decoration: none;
+    transition: background 0.3s, transform 0.2s;
+  }
+
+  .hero-btn:hover { background: var(--rose-dark); transform: translateY(-2px); }
+
+  .hero-right {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+
+  .hero-stat {
+    background: rgba(255,255,255,0.04);
+    border: 1px solid rgba(255,255,255,0.08);
+    border-radius: 12px;
+    padding: 24px 28px;
+    display: flex;
+    align-items: center;
+    gap: 20px;
+  }
+
+  .stat-big {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 48px;
+    font-weight: 300;
+    color: var(--rose-light);
+    line-height: 1;
+    flex-shrink: 0;
+  }
+
+  .stat-info-label {
+    font-size: 10px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--rose);
+    margin-bottom: 4px;
+  }
+
+  .stat-info-text {
+    font-size: 14px;
+    color: rgba(255,255,255,0.55);
+    line-height: 1.5;
+  }
+
+  /* SECTIONS */
+  section { padding: 100px 48px; }
+  .section-inner { max-width: 1100px; margin: 0 auto; }
+
+  .section-eyebrow {
+    font-size: 11px;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    color: var(--rose);
+    margin-bottom: 16px;
+    display: block;
+  }
+
+  .section-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(36px, 5vw, 56px);
+    font-weight: 300;
+    line-height: 1.15;
+    color: var(--charcoal);
+    margin-bottom: 24px;
+  }
+
+  .section-title em { font-style: italic; color: var(--rose-dark); }
+
+  .divider {
+    width: 40px;
+    height: 1px;
+    background: var(--rose);
+    margin: 24px 0 40px;
+  }
+
+  .section-text {
+    font-size: 16px;
+    line-height: 1.9;
+    color: var(--warm-grey);
+    max-width: 620px;
+  }
+
+  /* VISION */
+  .vision { background: var(--cream); }
+
+  .vision-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 80px;
+    align-items: start;
+  }
+
+  .vision-points {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    margin-top: 8px;
+  }
+
+  .vision-point {
+    display: flex;
+    gap: 16px;
+    align-items: flex-start;
+  }
+
+  .vp-line {
+    width: 20px;
+    height: 1px;
+    background: var(--rose);
+    margin-top: 12px;
+    flex-shrink: 0;
+  }
+
+  .vp-text {
+    font-size: 15px;
+    line-height: 1.7;
+    color: var(--warm-grey);
+  }
+
+  /* CURRICULUM */
+  .curriculum { background: var(--charcoal); }
+  .curriculum .section-title { color: var(--white); }
+  .curriculum .section-eyebrow { color: var(--rose-light); }
+  .curriculum .section-text { color: rgba(255,255,255,0.55); }
+
+  .weeks-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 2px;
+    margin-top: 60px;
+  }
+
+  .week-card {
+    background: rgba(255,255,255,0.04);
+    padding: 32px 28px;
+    border-top: 1px solid rgba(255,255,255,0.08);
+    transition: background 0.3s;
+    position: relative;
+  }
+
+  .week-card:hover { background: rgba(217,164,154,0.08); }
+
+  .week-num {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 52px;
+    font-weight: 300;
+    color: var(--rose);
+    opacity: 0.2;
+    line-height: 1;
+    position: absolute;
+    top: 16px;
+    right: 16px;
+  }
+
+  .week-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 20px;
+    font-style: italic;
+    color: var(--white);
+    margin-bottom: 8px;
+    line-height: 1.3;
+  }
+
+  .week-practice {
+    font-size: 11px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--rose);
+    margin-bottom: 12px;
+  }
+
+  .week-impulse {
+    font-size: 13px;
+    color: rgba(255,255,255,0.4);
+    line-height: 1.6;
+    font-style: italic;
+  }
+
+  /* FORMAT */
+  .format { background: var(--cream-dark); }
+
+  .format-grid {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 16px;
+    margin-top: 60px;
+  }
+
+  .format-card {
+    background: var(--white);
+    border-radius: 16px;
+    padding: 32px 24px;
+    text-align: center;
+    transition: transform 0.3s, box-shadow 0.3s;
+  }
+
+  .format-card:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 20px 50px rgba(0,0,0,0.08);
+  }
+
+  .format-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 20px;
+    color: var(--charcoal);
+    margin-bottom: 10px;
+  }
+
+  .format-text {
+    font-size: 13px;
+    color: var(--warm-grey);
+    line-height: 1.6;
+  }
+
+  /* SINA */
+  .sina-section { background: var(--cream); }
+
+  .sina-grid {
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+    gap: 80px;
+    align-items: center;
+  }
+
+  .sina-img-wrap {
+    border-radius: 20px;
+    overflow: hidden;
+    aspect-ratio: 3/4;
+  }
+
+  .sina-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center top;
+  }
+
+  .sina-name {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 48px;
+    font-weight: 300;
+    color: var(--charcoal);
+    margin-bottom: 6px;
+  }
+
+  .sina-role {
+    font-size: 11px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--rose-dark);
+    margin-bottom: 32px;
+  }
+
+  .sina-text {
+    font-size: 16px;
+    line-height: 1.9;
+    color: var(--warm-grey);
+    margin-bottom: 20px;
+  }
+
+  .sina-link {
+    display: inline-block;
+    margin-top: 8px;
+    font-size: 11px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--rose-dark);
+    text-decoration: none;
+    border-bottom: 1px solid var(--rose-light);
+    padding-bottom: 2px;
+    transition: color 0.3s;
+  }
+
+  .sina-link:hover { color: var(--charcoal); }
+
+  /* CTA */
+  .cta-section {
+    background: var(--rose-light);
+    padding: 100px 48px;
+    text-align: center;
+  }
+
+  .cta-inner { max-width: 680px; margin: 0 auto; }
+
+  .cta-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(36px, 5vw, 56px);
+    font-weight: 300;
+    color: var(--charcoal);
+    line-height: 1.15;
+    margin-bottom: 20px;
+  }
+
+  .cta-title em { font-style: italic; color: var(--rose-dark); }
+
+  .cta-text {
+    font-size: 16px;
+    line-height: 1.9;
+    color: var(--warm-grey);
+    margin-bottom: 40px;
+  }
+
+
+  .cta-price {
+    margin-bottom: 28px;
+  }
+
+  .cta-price-amount {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 72px;
+    font-weight: 300;
+    color: var(--charcoal);
+    line-height: 1;
+    display: block;
+    margin-bottom: 6px;
+  }
+
+  .cta-price-label {
+    font-size: 11px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--warm-grey);
+  }
+
+  .cta-btn {
+    display: inline-block;
+    background: var(--charcoal);
+    color: var(--white);
+    font-size: 12px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    padding: 18px 44px;
+    border-radius: 40px;
+    text-decoration: none;
+    transition: background 0.3s, transform 0.2s;
+  }
+
+  .cta-btn:hover { background: var(--rose-dark); transform: translateY(-2px); }
+
+  /* FOOTER */
+  footer {
+    background: var(--charcoal);
+    color: rgba(255,255,255,0.4);
+    padding: 32px 48px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-size: 12px;
+  }
+
+  .footer-logo {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 18px;
+    color: var(--white);
+    letter-spacing: 3px;
+    text-transform: uppercase;
+  }
+
+  .footer-links {
+    display: flex;
+    gap: 24px;
+    list-style: none;
+  }
+
+  .footer-links a {
+    color: rgba(255,255,255,0.4);
+    text-decoration: none;
+    font-size: 11px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    transition: color 0.3s;
+  }
+
+  .footer-links a:hover { color: var(--rose); }
+
+  .reveal {
+    opacity: 0;
+    transform: translateY(40px);
+    transition: opacity 0.8s ease, transform 0.8s ease;
+  }
+
+  .reveal.visible { opacity: 1; transform: translateY(0); }
+
+
+  /* MOBILE MENU */
+  .hamburger {
+    display: none;
+    flex-direction: column;
+    gap: 5px;
+    cursor: pointer;
+    padding: 4px;
+    background: none;
+    border: none;
+  }
+
+  .hamburger span {
+    display: block;
+    width: 24px;
+    height: 1.5px;
+    background: rgba(255,255,255,0.8);
+    transition: all 0.3s ease;
+  }
+
+  .hamburger.open span:nth-child(1) { transform: translateY(6.5px) rotate(45deg); }
+  .hamburger.open span:nth-child(2) { opacity: 0; }
+  .hamburger.open span:nth-child(3) { transform: translateY(-6.5px) rotate(-45deg); }
+
+  @media (max-width: 768px) {
+    .hamburger { display: flex; }
+
+    .nav-links {
+      display: none;
+      position: fixed;
+      top: 64px;
+      left: 0; right: 0;
+      background: var(--charcoal);
+      flex-direction: column;
+      gap: 0;
+      padding: 16px 0 24px;
+      border-top: 1px solid rgba(255,255,255,0.08);
+      z-index: 99;
+    }
+
+    .nav-links.open { display: flex; }
+
+    .nav-links li { width: 100%; }
+
+    .nav-links a {
+      display: block;
+      padding: 14px 28px;
+      font-size: 12px;
+      letter-spacing: 2px;
+      border-bottom: 1px solid rgba(255,255,255,0.05);
+    }
+
+    .nav-links .nav-cta {
+      margin: 16px 28px 0;
+      display: block;
+      text-align: center;
+      border-radius: 30px;
+      padding: 14px 28px;
+      background: var(--rose);
+    }
+  }
+
+  @media (max-width: 768px) {
+    nav { padding: 16px 24px; }
+    section { padding: 70px 24px; }
+    .page-hero { padding: 120px 24px 70px; }
+    .hero-inner { grid-template-columns: 1fr; gap: 40px; }
+    .vision-grid { grid-template-columns: 1fr; gap: 40px; }
+    .weeks-grid { grid-template-columns: 1fr 1fr; }
+    .format-grid { grid-template-columns: 1fr 1fr; }
+    .sina-grid { grid-template-columns: 1fr; gap: 40px; }
+    .cta-section { padding: 70px 24px; }
+    footer { flex-direction: column; gap: 16px; text-align: center; }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="index.html" class="nav-logo">She Regulates</a>
+  <ul class="nav-links" id="navLinks">
+    <li><a href="index.html#retreat">Das Retreat</a></li>
+    <li><a href="marke.html">Die Marke</a></li>
+    <li><a href="programm.html">10-Wochen</a></li>
+    <li><a href="atemschule.html" class="active">Atemschule</a></li>
+    <li><a href="index.html#kontakt" class="nav-cta">Anfragen</a></li>
+  </ul>
+  <button class="hamburger" id="hamburger" onclick="toggleMenu()" aria-label="Menu">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+
+<!-- HERO -->
+<section class="page-hero">
+  <div class="hero-inner">
+    <div>
+      <span class="page-eyebrow">12-Wochen Programm</span>
+      <h1 class="page-title">Weite im Atem.<br><em>Stabilitat im</em><br>Nervensystem.</h1>
+      <p class="page-lead">Die Atemschule verbindet moderne Atemwissenschaft mit somatischem Korperbewusstsein – der Fahigkeit, den Korper von innen zu spuren, zu lesen und in seiner Tiefe wahrzunehmen.</p>
+      <div class="hero-pills">
+        <span class="pill">12 Wochen</span>
+        <span class="pill">Online</span>
+        <span class="pill">Mit Sina Töpfer</span>
+      </div>
+      <a href="#anmeldung" class="hero-btn">Jetzt anmelden</a>
+    </div>
+    <div class="hero-right">
+      <div class="hero-stat">
+        <div class="stat-big">12</div>
+        <div>
+          <div class="stat-info-label">Wochen Programm</div>
+          <div class="stat-info-text">Wochentliche Einheiten mit klarer Struktur und Tiefe</div>
+        </div>
+      </div>
+      <div class="hero-stat">
+        <div class="stat-big">5</div>
+        <div>
+          <div class="stat-info-label">Elemente pro Woche</div>
+          <div class="stat-info-text">Check-in, Somatik, Atemtechnik, Journaling, Hausaufgabe</div>
+        </div>
+      </div>
+      <div class="hero-stat">
+        <div class="stat-big">1</div>
+        <div>
+          <div class="stat-info-label">Ziel</div>
+          <div class="stat-info-text">Nachhaltige Selbstregulation durch den Atem</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- VISION -->
+<section class="vision">
+  <div class="section-inner">
+    <div class="vision-grid reveal">
+      <div>
+        <span class="section-eyebrow">Das Konzept</span>
+        <h2 class="section-title">Der Atem als<br><em>Regulationsquelle.</em></h2>
+        <div class="divider"></div>
+        <p class="section-text">Der Atem ist kein isolierter Prozess. Er ist eingebettet in dein Nervensystem, dein Denken, dein Fuhlen und dein tagliches Funktionsniveau.</p>
+        <p class="section-text" style="margin-top:16px">In dieser 12-wochigen Atemschule lernst du, wie du deinen Atem als Regulationsquelle, als somatische Orientierung und als Weg zur inneren Stabilitat nutzen kannst.</p>
+      </div>
+      <div class="vision-points">
+        <div class="vision-point">
+          <div class="vp-line"></div>
+          <div class="vp-text">Dein Atemmuster lesen und verstehen</div>
+        </div>
+        <div class="vision-point">
+          <div class="vp-line"></div>
+          <div class="vp-text">Atem und Korper als Einheit wahrnehmen</div>
+        </div>
+        <div class="vision-point">
+          <div class="vp-line"></div>
+          <div class="vp-text">CO2-Toleranz und Kapazitat aufbauen</div>
+        </div>
+        <div class="vision-point">
+          <div class="vp-line"></div>
+          <div class="vp-text">Innere Raume erweitern</div>
+        </div>
+        <div class="vision-point">
+          <div class="vp-line"></div>
+          <div class="vp-text">Dich im Alltag bewusster regulieren</div>
+        </div>
+        <div class="vision-point">
+          <div class="vp-line"></div>
+          <div class="vp-text">Zugang zu deinem Nervensystem und inneren Orientierungssinn</div>
+        </div>
+        <div class="vision-point">
+          <div class="vp-line"></div>
+          <div class="vp-text">Eingefahrene Muster erkennen und neue Moglichkeiten entdecken</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FORMAT -->
+<section class="format" style="background:var(--cream-dark)">
+  <div class="section-inner">
+    <span class="section-eyebrow">Wochentliche Struktur</span>
+    <h2 class="section-title">Funf Elemente.<br>Jede <em>Woche.</em></h2>
+    <div class="format-grid reveal">
+      <div class="format-card">
+        <div class="format-title">Check-in</div>
+        <div class="format-text">Kurze Befindlichkeitsrunde zu dir und deinem aktuellen Zustand</div>
+      </div>
+      <div class="format-card">
+        <div class="format-title">Somatik</div>
+        <div class="format-text">Ubung fur Erdung, Interozeption und Korperprasenz</div>
+      </div>
+      <div class="format-card">
+        <div class="format-title">Atemtechnik</div>
+        <div class="format-text">Die Atemtechnik der Woche – klar, einfach, wirksam</div>
+      </div>
+      <div class="format-card">
+        <div class="format-title">Journaling</div>
+        <div class="format-text">Systemische, reflektierende Impulsfrage zum Nachdenken</div>
+      </div>
+      <div class="format-card">
+        <div class="format-title">Hausaufgabe</div>
+        <div class="format-text">Vertiefung der eigenen Praxis zwischen den Einheiten</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CURRICULUM -->
+<section class="curriculum">
+  <div class="section-inner">
+    <span class="section-eyebrow">Der Lehrplan</span>
+    <h2 class="section-title" style="color:var(--white)">12 Wochen.<br>Ein <em>Weg nach innen.</em></h2>
+    <p class="section-text">Von der ersten Atembeobachtung bis zur Integration – jede Woche fuhrt dich tiefer in deinen Atem und dein Nervensystem.</p>
+    <div class="weeks-grid reveal">
+      <div class="week-card">
+        <div class="week-num">1</div>
+        <div class="week-title">Atembeobachtung & Raume offnen</div>
+        <div class="week-practice">Neutrale Beobachtung</div>
+        <div class="week-impulse">Was zeigt mir mein Atem uber mein aktuelles Lebenstempo?</div>
+      </div>
+      <div class="week-card">
+        <div class="week-num">2</div>
+        <div class="week-title">Bauchatmung</div>
+        <div class="week-practice">Bauchatmung & Meeresrauschen</div>
+        <div class="week-impulse">Was brauche ich, um wirklich in den Bauch kommen zu konnen?</div>
+      </div>
+      <div class="week-card">
+        <div class="week-num">3</div>
+        <div class="week-title">Verlangerte Ausatmung</div>
+        <div class="week-practice">4 Ein – 8 Aus</div>
+        <div class="week-impulse">Wo darf in meinem Leben gerade mehr Loslassen entstehen?</div>
+      </div>
+      <div class="week-card">
+        <div class="week-num">4</div>
+        <div class="week-title">Summen</div>
+        <div class="week-practice">Humming Breath</div>
+        <div class="week-impulse">Was verandert sich in mir, wenn meine Stimme Resonanz bekommt?</div>
+      </div>
+      <div class="week-card">
+        <div class="week-num">5</div>
+        <div class="week-title">Koharenzatmung</div>
+        <div class="week-practice">5-5 oder 6-6 Rhythmus</div>
+        <div class="week-impulse">Wo wunsche ich mir mehr Balance oder Gleichklang?</div>
+      </div>
+      <div class="week-card">
+        <div class="week-num">6</div>
+        <div class="week-title">LSD-Atmung</div>
+        <div class="week-practice">Low, Slow, Deep</div>
+        <div class="week-impulse">Was wird in mir moglich, wenn ich bewusst verlangsame?</div>
+      </div>
+      <div class="week-card">
+        <div class="week-num">7</div>
+        <div class="week-title">Sanfte Atempausen</div>
+        <div class="week-practice">Ausatmungspause</div>
+        <div class="week-impulse">Welche inneren Grenzen nehme ich zuerst wahr?</div>
+      </div>
+      <div class="week-card">
+        <div class="week-num">8</div>
+        <div class="week-title">Wechselatmung</div>
+        <div class="week-practice">Sanft, ohne lange Pausen</div>
+        <div class="week-impulse">Welche zwei Aspekte in mir mochten mehr in Einklang kommen?</div>
+      </div>
+      <div class="week-card">
+        <div class="week-num">9</div>
+        <div class="week-title">Boxatmung</div>
+        <div class="week-practice">4 – 4 – 4 – 4</div>
+        <div class="week-impulse">Wo brauche ich mehr Struktur – und wo mehr Weite?</div>
+      </div>
+      <div class="week-card">
+        <div class="week-num">10</div>
+        <div class="week-title">Atem in Bewegung</div>
+        <div class="week-practice">LSD im Gehen</div>
+        <div class="week-impulse">Wie verandert sich mein innerer Zustand, wenn Atem und Bewegung zusammenarbeiten?</div>
+      </div>
+      <div class="week-card">
+        <div class="week-num">11</div>
+        <div class="week-title">CO2-Exposition</div>
+        <div class="week-practice">Atempausen erweitert</div>
+        <div class="week-impulse">Was entsteht in mir, wenn ich langer in einer milden Herausforderung bleibe?</div>
+      </div>
+      <div class="week-card">
+        <div class="week-num">12</div>
+        <div class="week-title">Integration</div>
+        <div class="week-practice">Resilienzatmung 4 / 3 / 8</div>
+        <div class="week-impulse">Was hat sich in meinem Atem und meinem Leben uber 12 Wochen verandert?</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SINA -->
+<section class="sina-section">
+  <div class="section-inner">
+    <div class="sina-grid reveal">
+      <div class="sina-img-wrap">
+        <img src="Sina_Bild.png" alt="Sina Töpfer" class="sina-img">
+      </div>
+      <div>
+        <span class="section-eyebrow">Deine Begleiterin</span>
+        <div class="sina-name">Sina Töpfer</div>
+        <div class="sina-role">Systemische Familienberaterin</div>
+        <div class="divider"></div>
+        <p class="sina-text">Seit 2017 begleite ich Menschen in Lebenskrisen, Ubergangen und Veranderungsprozessen – digital und deutschlandweit. Meine Arbeit beschäftigt sich mit den Wechselwirkungen, Dynamiken und Ressourcen eines Systems.</p>
+        <p class="sina-text">2021 habe ich mich vollstandig der systemischen Arbeit gewidmet, die ich seit meinem Abschluss an der Leuphana Luneburg parallel aufgebaut hatte. Die Atemschule ist ein naturlicher Bestandteil meiner Arbeit: Atem als direktester Zugang zum Nervensystem.</p>
+        <a href="https://www.systemischefamilienberaterin.de" target="_blank" class="sina-link">systemischefamilienberaterin.de</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="cta-section" id="anmeldung">
+  <div class="cta-inner reveal">
+    <span class="section-eyebrow" style="color:var(--rose-dark)">Anmeldung</span>
+    <h2 class="cta-title">Bereit fur deinen<br><em>Weg nach innen?</em></h2>
+    <div class="cta-price">
+      <span class="cta-price-amount">899 &euro;</span>
+      <span class="cta-price-label">pro Person &middot; 12 Wochen Online</span>
+    </div>
+    <p class="cta-text">Die Atemschule startet in kleinen Gruppen. Schreib Sina direkt an – sie meldet sich personlich bei dir.</p>
+    <div id="hubspot-form-atemschule"></div>
+    <script charset="utf-8" type="text/javascript" src="//js-eu1.hsforms.net/forms/embed/v2.js"></script>
+    <script>
+      hbspt.forms.create({
+        portalId: "147264621",
+        formId: "f4181721-f673-4d9c-a7f8-4d45f0703fde",
+        region: "eu1",
+        target: "#hubspot-form-atemschule",
+        onFormReady: function(form) {
+          const style = document.createElement('style');
+          style.innerHTML = `
+            #hubspot-form-atemschule .hs-form-private { display: flex; flex-direction: column; gap: 14px; }
+            #hubspot-form-atemschule label { font-family: Jost, sans-serif; font-size: 11px; letter-spacing: 2px; text-transform: uppercase; color: #b8807a; margin-bottom: 6px; display: block; font-weight: 400; }
+            #hubspot-form-atemschule input[type=text],
+            #hubspot-form-atemschule input[type=email],
+            #hubspot-form-atemschule textarea { width: 100%; background: #ffffff; border: 1px solid rgba(217,164,154,0.3); border-radius: 8px; padding: 16px 20px; font-family: Jost, sans-serif; font-size: 14px; font-weight: 300; color: #2a2520; outline: none; box-sizing: border-box; }
+            #hubspot-form-atemschule input:focus, #hubspot-form-atemschule textarea:focus { border-color: #b8807a; outline: none; }
+            #hubspot-form-atemschule textarea { min-height: 120px; resize: vertical; }
+            #hubspot-form-atemschule .hs-button { background: #2a2520; color: #ffffff; border: none; border-radius: 40px; padding: 18px 48px; font-family: Jost, sans-serif; font-size: 12px; letter-spacing: 3px; text-transform: uppercase; cursor: pointer; transition: background 0.3s; margin-top: 8px; }
+            #hubspot-form-atemschule .hs-button:hover { background: #b8807a; }
+            #hubspot-form-atemschule .hs-error-msgs { list-style: none; margin: 4px 0 0; }
+            #hubspot-form-atemschule .hs-error-msgs li label { color: #c0392b; font-size: 11px; text-transform: none; letter-spacing: 1px; }
+            #hubspot-form-atemschule .submitted-message { font-family: Cormorant Garamond, serif; font-size: 22px; color: #7d9e8c; text-align: center; padding: 32px 0; font-style: italic; }
+            #hubspot-form-atemschule fieldset { max-width: 100% !important; }
+          `;
+          document.head.appendChild(style);
+        }
+      });
+    </script>
+    <p style="font-size:12px;color:var(--warm-grey);margin-top:16px;text-align:center;letter-spacing:1px">Oder direkt per E-Mail: <a href="mailto:toepfer@systemischefamilienberaterin.de" style="color:var(--rose-dark)">toepfer@systemischefamilienberaterin.de</a></p>
+  </div>
+</section>
+
+<footer>
+  <div class="footer-logo">She Regulates</div>
+  <p>2025 Hanna Wrobel & Sina Töpfer · sheregulates.de</p>
+  <ul class="footer-links">
+    <li><a href="impressum.html">Impressum</a></li>
+    <li><a href="datenschutz.html">Datenschutz</a></li>
+  </ul>
+</footer>
+
+<script>
+  const reveals = document.querySelectorAll('.reveal');
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+  }, { threshold: 0.1 });
+  reveals.forEach(r => observer.observe(r));
+</script>
+
+</body>
+</html>
