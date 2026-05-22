@@ -5,635 +5,94 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Podcast – She Regulates</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Jost:wght@300;400;500&display=swap" rel="stylesheet">
-<style>
-  :root {
-    --rose: #d9a49a;
-    --rose-light: #f0dbd7;
-    --rose-dark: #b8807a;
-    --cream: #faf7f3;
-    --cream-dark: #f0ebe2;
-    --charcoal: #2a2520;
-    --warm-grey: #8a8078;
-    --white: #ffffff;
-  }
-
-  * { margin: 0; padding: 0; box-sizing: border-box; }
-  html { scroll-behavior: smooth; }
-
-  body {
-    font-family: 'Jost', sans-serif;
-    background: var(--cream);
-    color: var(--charcoal);
-    font-weight: 300;
-    overflow-x: hidden;
-  }
-
-  nav {
-    position: fixed;
-    top: 0; left: 0; right: 0;
-    z-index: 100;
-    background: var(--charcoal);
-    padding: 20px 48px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-  }
-
-  .nav-logo {
-    font-family: 'Cormorant Garamond', serif;
-    font-size: 22px;
-    font-weight: 400;
-    letter-spacing: 3px;
-    color: var(--white);
-    text-decoration: none;
-    text-transform: uppercase;
-  }
-
-  .nav-links {
-    display: flex;
-    gap: 36px;
-    list-style: none;
-  }
-
-  .nav-links a {
-    font-size: 12px;
-    letter-spacing: 2.5px;
-    text-transform: uppercase;
-    color: rgba(255,255,255,0.6);
-    text-decoration: none;
-    transition: color 0.3s;
-  }
-
-  .nav-links a:hover, .nav-links a.active { color: var(--rose); }
-
-  .nav-cta {
-    color: var(--white) !important;
-    background: var(--rose);
-    padding: 10px 22px;
-    border-radius: 30px;
-    transition: background 0.3s;
-  }
-
-  .nav-cta:hover { background: var(--rose-dark) !important; }
-
-  /* HERO */
-  .page-hero {
-    background: var(--charcoal);
-    padding: 160px 48px 100px;
-    text-align: center;
-    position: relative;
-    overflow: hidden;
-  }
-
-  .page-hero::before {
-    content: '';
-    position: absolute;
-    top: -100px; right: -100px;
-    width: 500px; height: 500px;
-    border-radius: 50%;
-    background: var(--rose);
-    opacity: 0.05;
-  }
-
-  .page-eyebrow {
-    font-size: 11px;
-    letter-spacing: 4px;
-    text-transform: uppercase;
-    color: var(--rose);
-    margin-bottom: 20px;
-    display: block;
-  }
-
-  .page-title {
-    font-family: 'Cormorant Garamond', serif;
-    font-size: clamp(48px, 7vw, 88px);
-    font-weight: 300;
-    color: var(--white);
-    line-height: 1.05;
-    margin-bottom: 24px;
-  }
-
-  .page-title em { font-style: italic; color: var(--rose-light); }
-
-  .page-lead {
-    font-size: 17px;
-    line-height: 1.85;
-    color: rgba(255,255,255,0.5);
-    max-width: 600px;
-    margin: 0 auto;
-  }
-
-  /* EPISODES */
-  .episodes {
-    background: var(--cream);
-    padding: 100px 48px;
-  }
-
-  .episodes-inner {
-    max-width: 900px;
-    margin: 0 auto;
-  }
-
-  .section-eyebrow {
-    font-size: 11px;
-    letter-spacing: 4px;
-    text-transform: uppercase;
-    color: var(--rose);
-    margin-bottom: 16px;
-    display: block;
-  }
-
-  .section-title {
-    font-family: 'Cormorant Garamond', serif;
-    font-size: clamp(36px, 5vw, 56px);
-    font-weight: 300;
-    line-height: 1.15;
-    color: var(--charcoal);
-    margin-bottom: 60px;
-  }
-
-  .section-title em { font-style: italic; color: var(--rose-dark); }
-
-  /* EPISODE CARD */
-  .episode {
-    background: var(--charcoal);
-    border-radius: 24px;
-    overflow: hidden;
-    margin-bottom: 32px;
-    transition: transform 0.3s, box-shadow 0.3s;
-  }
-
-  .episode:hover {
-    transform: translateY(-4px);
-    box-shadow: 0 24px 60px rgba(0,0,0,0.2);
-  }
-
-  .episode-top {
-    display: grid;
-    grid-template-columns: 200px 1fr;
-  }
-
-  .episode-cover {
-    background: linear-gradient(135deg, var(--rose-dark), #7a5550);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 32px;
-    flex-direction: column;
-    text-align: center;
-  }
-
-  .episode-cover-logo {
-    font-family: 'Cormorant Garamond', serif;
-    font-size: 20px;
-    font-weight: 300;
-    letter-spacing: 3px;
-    color: rgba(255,255,255,0.9);
-    text-transform: uppercase;
-    line-height: 1.2;
-    margin-bottom: 12px;
-  }
-
-  .episode-num {
-    font-size: 10px;
-    letter-spacing: 3px;
-    text-transform: uppercase;
-    color: rgba(255,255,255,0.4);
-  }
-
-  .episode-info {
-    padding: 36px 40px;
-  }
-
-  .episode-label {
-    font-size: 10px;
-    letter-spacing: 3px;
-    text-transform: uppercase;
-    color: var(--rose);
-    margin-bottom: 10px;
-  }
-
-  .episode-title {
-    font-family: 'Cormorant Garamond', serif;
-    font-size: 26px;
-    font-weight: 400;
-    color: var(--white);
-    line-height: 1.3;
-    margin-bottom: 12px;
-  }
-
-  .episode-desc {
-    font-size: 14px;
-    color: rgba(255,255,255,0.5);
-    line-height: 1.7;
-    margin-bottom: 24px;
-  }
-
-  /* PLAYER */
-  .player {
-    padding: 0 40px 32px;
-  }
-
-  .progress-wrap {
-    height: 3px;
-    background: rgba(255,255,255,0.1);
-    border-radius: 3px;
-    cursor: pointer;
-    margin-bottom: 8px;
-  }
-
-  .progress-bar {
-    height: 100%;
-    background: var(--rose);
-    border-radius: 3px;
-    width: 0%;
-    transition: width 0.1s linear;
-    pointer-events: none;
-  }
-
-  .time-row {
-    display: flex;
-    justify-content: space-between;
-    font-size: 11px;
-    color: rgba(255,255,255,0.3);
-    letter-spacing: 1px;
-    margin-bottom: 16px;
-  }
-
-  .btn-row {
-    display: flex;
-    align-items: center;
-    gap: 16px;
-  }
-
-  .play-btn {
-    width: 52px;
-    height: 52px;
-    border-radius: 50%;
-    background: var(--rose);
-    border: none;
-    color: white;
-    font-size: 16px;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    transition: background 0.3s, transform 0.2s;
-    padding-left: 3px;
-    flex-shrink: 0;
-  }
-
-  .play-btn:hover { background: var(--rose-dark); transform: scale(1.05); }
-
-  .ctrl-btn {
-    background: none;
-    border: 1px solid rgba(255,255,255,0.15);
-    color: rgba(255,255,255,0.5);
-    font-family: 'Jost', sans-serif;
-    font-size: 11px;
-    letter-spacing: 1px;
-    padding: 8px 14px;
-    border-radius: 20px;
-    cursor: pointer;
-    transition: border-color 0.3s, color 0.3s;
-  }
-
-  .ctrl-btn:hover { border-color: var(--rose); color: var(--rose); }
-
-  /* CTA */
-  .cta-section {
-    background: var(--rose-light);
-    padding: 100px 48px;
-    text-align: center;
-  }
-
-  .cta-inner { max-width: 600px; margin: 0 auto; }
-
-  .cta-title {
-    font-family: 'Cormorant Garamond', serif;
-    font-size: clamp(32px, 4vw, 52px);
-    font-weight: 300;
-    color: var(--charcoal);
-    line-height: 1.2;
-    margin-bottom: 20px;
-  }
-
-  .cta-title em { font-style: italic; color: var(--rose-dark); }
-
-  .cta-text {
-    font-size: 16px;
-    line-height: 1.9;
-    color: var(--warm-grey);
-    margin-bottom: 40px;
-  }
-
-  .cta-btn {
-    display: inline-block;
-    background: var(--charcoal);
-    color: var(--white);
-    font-size: 12px;
-    letter-spacing: 3px;
-    text-transform: uppercase;
-    padding: 18px 44px;
-    border-radius: 40px;
-    text-decoration: none;
-    transition: background 0.3s, transform 0.2s;
-  }
-
-  .cta-btn:hover { background: var(--rose-dark); transform: translateY(-2px); }
-
-  /* FOOTER */
-  footer {
-    background: var(--charcoal);
-    color: rgba(255,255,255,0.4);
-    padding: 32px 48px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    font-size: 12px;
-  }
-
-  .footer-logo {
-    font-family: 'Cormorant Garamond', serif;
-    font-size: 18px;
-    color: var(--white);
-    letter-spacing: 3px;
-    text-transform: uppercase;
-  }
-
-  .footer-links { display: flex; gap: 24px; list-style: none; }
-
-  .footer-links a {
-    color: rgba(255,255,255,0.4);
-    text-decoration: none;
-    font-size: 11px;
-    letter-spacing: 2px;
-    text-transform: uppercase;
-    transition: color 0.3s;
-  }
-
-  .footer-links a:hover { color: var(--rose); }
-
-  .reveal { opacity: 0; transform: translateY(40px); transition: opacity 0.8s ease, transform 0.8s ease; }
-  .reveal.visible { opacity: 1; transform: translateY(0); }
-
-
-  /* MOBILE MENU */
-  .hamburger {
-    display: none;
-    flex-direction: column;
-    gap: 5px;
-    cursor: pointer;
-    padding: 4px;
-    background: none;
-    border: none;
-  }
-
-  .hamburger span {
-    display: block;
-    width: 24px;
-    height: 1.5px;
-    background: rgba(255,255,255,0.8);
-    transition: all 0.3s ease;
-  }
-
-  .hamburger.open span:nth-child(1) { transform: translateY(6.5px) rotate(45deg); }
-  .hamburger.open span:nth-child(2) { opacity: 0; }
-  .hamburger.open span:nth-child(3) { transform: translateY(-6.5px) rotate(-45deg); }
-
-  @media (max-width: 768px) {
-    .hamburger { display: flex; }
-
-    .nav-links {
-      display: none;
-      position: fixed;
-      top: 64px;
-      left: 0; right: 0;
-      background: var(--charcoal);
-      flex-direction: column;
-      gap: 0;
-      padding: 16px 0 24px;
-      border-top: 1px solid rgba(255,255,255,0.08);
-      z-index: 99;
-    }
-
-    .nav-links.open { display: flex; }
-
-    .nav-links li { width: 100%; }
-
-    .nav-links a {
-      display: block;
-      padding: 14px 28px;
-      font-size: 12px;
-      letter-spacing: 2px;
-      border-bottom: 1px solid rgba(255,255,255,0.05);
-    }
-
-    .nav-links .nav-cta {
-      margin: 16px 28px 0;
-      display: block;
-      text-align: center;
-      border-radius: 30px;
-      padding: 14px 28px;
-      background: var(--rose);
-    }
-  }
-
-  @media (max-width: 768px) {
-    nav { padding: 16px 24px; }
-    .page-hero { padding: 120px 24px 70px; }
-    .episodes { padding: 70px 24px; }
-    .episode-top { grid-template-columns: 1fr; }
-    .episode-cover { padding: 32px; height: 140px; flex-direction: row; gap: 16px; }
-    .episode-info { padding: 28px 24px; }
-    .player { padding: 0 24px 28px; }
-    .cta-section { padding: 70px 24px; }
-    footer { flex-direction: column; gap: 16px; text-align: center; }
-  }
-</style>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,300;0,400;0,500;1,300;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
 </head>
 <body>
-
-<nav>
-  <a href="index.html" class="nav-logo">She Regulates</a>
-  <ul class="nav-links" id="navLinks">
-    <li><a href="index.html#retreat">Das Retreat</a></li>
-    <li><a href="marke.html">Die Marke</a></li>
-    <li><a href="programm.html">10-Wochen</a></li>
-    <li><a href="atemschule.html">Atemschule</a></li>
-    <li><a href="podcast.html" class="active">Podcast</a></li>
-    <li><a href="index.html#kontakt" class="nav-cta">Anfragen</a></li>
-  </ul>
-  <button class="hamburger" id="hamburger" onclick="toggleMenu()" aria-label="Menu">
-    <span></span><span></span><span></span>
-  </button>
+<nav id="navbar">
+  <div class="nav-inner">
+    <a href="index.html" class="logo">She <span>Regulates</span></a>
+    <ul class="nav-links">
+      <li><a href="index.html">Das Retreat</a></li>
+      <li><a href="marke.html">Die Marke</a></li>
+      <li><a href="programm.html">10-Wochen</a></li>
+      <li><a href="atemschule.html">Atemschule</a></li>
+      <li><a href="podcast.html" class="active">Podcast</a></li>
+      <li><a href="wissen.html">Wissen</a></li>
+      <li><a href="index.html#anfragen" class="nav-cta">Anfragen</a></li>
+    </ul>
+    <button class="hamburger" id="hamburger" aria-label="Menü"><span></span><span></span><span></span></button>
+  </div>
 </nav>
-
-<!-- HERO -->
-<section class="page-hero">
-  <span class="page-eyebrow">She Regulates · Audio</span>
-  <h1 class="page-title">Wissen fur dein<br><em>Nervensystem.</em></h1>
-  <p class="page-lead">Kurze, dichte Episoden uber Regulation, Hormongesundheit und alles, was Frauen 40+ wirklich brauchen – zum Horen, wann immer du willst.</p>
-</section>
-
-<!-- EPISODES -->
-<section class="episodes">
-  <div class="episodes-inner">
-    <span class="section-eyebrow">Alle Episoden</span>
-    <h2 class="section-title">Hör <em>rein.</em></h2>
-
-    <!-- Episode 1 -->
-    <div class="episode reveal">
-      <div class="episode-top">
-        <div class="episode-cover">
-          <div class="episode-cover-logo">she<br>regulates</div>
-          <div class="episode-num">Episode 01</div>
-        </div>
-        <div class="episode-info">
-          <div class="episode-label">Episode 01</div>
-          <div class="episode-title">Warum Auspowern bei Stress alles verschlimmert</div>
-          <p class="episode-desc">Was passiert in deinem Nervensystem wenn du bei Dauerstress einfach mehr trainierst – und warum das oft das Gegenteil von Erholung bewirkt. Mit konkreten Alternativen.</p>
-        </div>
-      </div>
-      <div class="player">
-        <audio id="audio1" src="podcast.m4a" preload="metadata"></audio>
-        <div class="progress-wrap" id="pw1">
-          <div class="progress-bar" id="pb1"></div>
-        </div>
-        <div class="time-row">
-          <span id="ct1">0:00</span>
-          <span id="dur1">--:--</span>
-        </div>
-        <div class="btn-row">
-          <button class="ctrl-btn" onclick="skip('audio1', -15)">-15s</button>
-          <button class="play-btn" id="playBtn1" onclick="togglePlay('audio1', 'playBtn1')">&#9654;</button>
-          <button class="ctrl-btn" onclick="skip('audio1', 15)">+15s</button>
-        </div>
+<div class="mobile-menu" id="mobileMenu">  <a href="index.html">Das Retreat</a>  <a href="marke.html">Die Marke</a>  <a href="programm.html">10-Wochen</a>  <a href="atemschule.html">Atemschule</a>  <a href="podcast.html">Podcast</a>  <a href="wissen.html">Wissen</a>  <a href="index.html#anfragen" class="btn btn-primary" style="margin-top:1rem">Anfragen</a></div>
+<div class="page-hero"><div class="container"><span class="tag">Audio</span><h1>Wissen für<br><em>dein Nervensystem.</em></h1><p style="max-width:560px;margin-top:1rem">Kurze, dichte Episoden über Regulation, Hormongesundheit und alles, was Frauen 40+ wirklich brauchen.</p></div></div>
+<section class="section"><div class="container" style="max-width:760px">
+  <div class="episode-card">
+    <div class="ep-meta">she regulates · Episode 01</div>
+    <h3>Warum Auspowern bei Stress alles verschlimmert</h3>
+    <p style="margin-top:.5rem">Was passiert in deinem Nervensystem wenn du bei Dauerstress einfach mehr trainierst – und warum das oft das Gegenteil von Erholung bewirkt. Mit konkreten Alternativen.</p>
+    <div class="player">
+      <div class="player-bar">
+        <button class="play-btn" id="pb1" onclick="togglePlay(1)"><svg width="14" height="16" viewBox="0 0 14 16" fill="#fff"><path d="M0 0l14 8-14 8z"/></svg></button>
+        <div class="progress-wrap" id="pw1"><div class="progress-fill" id="pf1"></div></div>
+        <span class="time-display" id="td1">0:00 / --:--</span>
       </div>
     </div>
-
-    <!-- Episode 2 -->
-    <div class="episode reveal">
-      <div class="episode-top">
-        <div class="episode-cover" style="background: linear-gradient(135deg, #5a7a6a, #3d5a4a);">
-          <div class="episode-cover-logo">she<br>regulates</div>
-          <div class="episode-num">Episode 02</div>
-        </div>
-        <div class="episode-info">
-          <div class="episode-label">Episode 02</div>
-          <div class="episode-title">Warum Auspowern deinem Nervensystem ab 40 schadet</div>
-          <p class="episode-desc">Ab 40 verandert sich die Art, wie dein Nervensystem auf Belastung reagiert. Warum klassisches Auspowern jetzt mehr schadet als nutzt – und was dein System stattdessen braucht.</p>
-        </div>
-      </div>
-      <div class="player">
-        <audio id="audio2" src="podcast2.m4a" preload="metadata"></audio>
-        <div class="progress-wrap" id="pw2">
-          <div class="progress-bar" id="pb2"></div>
-        </div>
-        <div class="time-row">
-          <span id="ct2">0:00</span>
-          <span id="dur2">--:--</span>
-        </div>
-        <div class="btn-row">
-          <button class="ctrl-btn" onclick="skip('audio2', -15)">-15s</button>
-          <button class="play-btn" id="playBtn2" onclick="togglePlay('audio2', 'playBtn2')">&#9654;</button>
-          <button class="ctrl-btn" onclick="skip('audio2', 15)">+15s</button>
-        </div>
+  </div>
+  <div class="episode-card">
+    <div class="ep-meta">she regulates · Episode 02</div>
+    <h3>Warum Auspowern deinem Nervensystem ab 40 schadet</h3>
+    <p style="margin-top:.5rem">Ab 40 verändert sich die Art, wie dein Nervensystem auf Belastung reagiert. Warum klassisches Auspowern jetzt mehr schadet als nutzt – und was dein System stattdessen braucht.</p>
+    <div class="player">
+      <div class="player-bar">
+        <button class="play-btn" id="pb2" onclick="togglePlay(2)"><svg width="14" height="16" viewBox="0 0 14 16" fill="#fff"><path d="M0 0l14 8-14 8z"/></svg></button>
+        <div class="progress-wrap" id="pw2"><div class="progress-fill" id="pf2"></div></div>
+        <span class="time-display" id="td2">0:00 / --:--</span>
       </div>
     </div>
-
   </div>
-</section>
-
-<!-- CTA -->
-<section class="cta-section">
-  <div class="cta-inner reveal">
-    <h2 class="cta-title">Bereit fur den<br>nachsten <em>Schritt?</em></h2>
-    <p class="cta-text">Vom Zuhoren zum Erleben – das Retreat oder eines der Programme ist dein Einstieg in nachhaltige Regulation.</p>
-    <a href="index.html#kontakt" class="cta-btn">Jetzt anfragen</a>
+  <div style="margin-top:3rem;text-align:center;background:var(--cream-dark);padding:2.5rem;border-radius:var(--radius)">
+    <h3>Bereit für den nächsten Schritt?</h3>
+    <p style="margin:.75rem 0">Vom Zuhören zum Erleben – das Retreat oder eines der Programme ist dein Einstieg.</p>
+    <a href="index.html#anfragen" class="btn btn-primary">Jetzt anfragen</a>
   </div>
-</section>
-
-<footer>
-  <div class="footer-logo">She Regulates</div>
-  <p>2025 Hanna Wrobel & Sina Topfer · sheregulates.de</p>
-  <ul class="footer-links">
-    <li><a href="impressum.html">Impressum</a></li>
-    <li><a href="datenschutz.html">Datenschutz</a></li>
-  </ul>
-</footer>
-
+</div></section>
+<footer><div class="container"><div class="footer-inner"><div><a href="index.html" class="logo">She <span>Regulates</span></a><p>Regulation für Frauen in der zweiten Lebenshälfte.</p></div><div class="footer-links"><a href="index.html">Das Retreat</a><a href="marke.html">Die Marke</a><a href="programm.html">10-Wochen-Programm</a><a href="atemschule.html">Atemschule</a><a href="podcast.html">Podcast</a><a href="wissen.html">Wissen</a></div><div class="footer-legal"><a href="impressum.html">Impressum</a><a href="datenschutz.html">Datenschutz</a><p style="margin-top:.75rem">© 2025 Hanna Wrobel &amp; Sina Töpfer</p></div></div></div></footer>
 <script>
-  // Reveal
-  const reveals = document.querySelectorAll('.reveal');
-  const observer = new IntersectionObserver((entries) => {
-    entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
-  }, { threshold: 0.1 });
-  reveals.forEach(r => observer.observe(r));
-
-  // Player logic
-  function formatTime(s) {
-    if (isNaN(s)) return '--:--';
-    const m = Math.floor(s / 60);
-    const sec = Math.floor(s % 60);
-    return m + ':' + (sec < 10 ? '0' : '') + sec;
-  }
-
-  function togglePlay(audioId, btnId) {
-    const audio = document.getElementById(audioId);
-    const btn = document.getElementById(btnId);
-    // Pause all others
-    ['audio1','audio2'].forEach(id => {
-      if (id !== audioId) {
-        const a = document.getElementById(id);
-        a.pause();
-        document.getElementById(id === 'audio1' ? 'playBtn1' : 'playBtn2').innerHTML = '&#9654;';
-      }
-    });
-    if (audio.paused) {
-      audio.play();
-      btn.innerHTML = '&#9646;&#9646;';
-    } else {
-      audio.pause();
-      btn.innerHTML = '&#9654;';
+  const nb=document.getElementById('navbar');
+  window.addEventListener('scroll',()=>nb.classList.toggle('scrolled',window.scrollY>40));
+  const hb=document.getElementById('hamburger'),mm=document.getElementById('mobileMenu');
+  hb.addEventListener('click',()=>{mm.classList.toggle('open');hb.classList.toggle('open');});
+  mm.querySelectorAll('a').forEach(a=>a.addEventListener('click',()=>{mm.classList.remove('open');hb.classList.remove('open');}));
+  
+  const audios = { 1: new Audio('podcast.m4a'), 2: new Audio('podcast2.m4a') };
+  let currentPlaying = null;
+  function togglePlay(n) {
+    const audio = audios[n];
+    const btn = document.getElementById('pb'+n);
+    const pf = document.getElementById('pf'+n);
+    const td = document.getElementById('td'+n);
+    const fmt = s => Math.floor(s/60)+':'+(Math.floor(s%60)<10?'0':'')+Math.floor(s%60);
+    if (currentPlaying && currentPlaying !== n) {
+      audios[currentPlaying].pause();
+      document.getElementById('pb'+currentPlaying).innerHTML = '<svg width="14" height="16" viewBox="0 0 14 16" fill="#fff"><path d="M0 0l14 8-14 8z"/></svg>';
     }
+    if (audio.paused) {
+      audio.play(); currentPlaying = n;
+      btn.innerHTML = '<svg width="12" height="14" viewBox="0 0 12 14" fill="#fff"><rect x="0" y="0" width="4" height="14"/><rect x="8" y="0" width="4" height="14"/></svg>';
+    } else {
+      audio.pause(); currentPlaying = null;
+      btn.innerHTML = '<svg width="14" height="16" viewBox="0 0 14 16" fill="#fff"><path d="M0 0l14 8-14 8z"/></svg>';
+    }
+    audio.ontimeupdate = () => {
+      const p = audio.duration ? (audio.currentTime/audio.duration)*100 : 0;
+      pf.style.width = p+'%';
+      td.textContent = fmt(audio.currentTime)+' / '+(audio.duration ? fmt(audio.duration) : '--:--');
+    };
+    document.getElementById('pw'+n).onclick = (e) => {
+      const r = e.currentTarget.getBoundingClientRect();
+      audio.currentTime = ((e.clientX-r.left)/r.width)*audio.duration;
+    };
   }
 
-  function skip(audioId, seconds) {
-    const audio = document.getElementById(audioId);
-    audio.currentTime = Math.max(0, Math.min(audio.duration, audio.currentTime + seconds));
-  }
-
-  // Setup each player
-  [['audio1','pb1','ct1','dur1','pw1'],['audio2','pb2','ct2','dur2','pw2']].forEach(([aid,pbid,ctid,durid,pwid]) => {
-    const audio = document.getElementById(aid);
-    const pb = document.getElementById(pbid);
-    const ct = document.getElementById(ctid);
-    const dur = document.getElementById(durid);
-    const pw = document.getElementById(pwid);
-    const btn = document.getElementById(aid === 'audio1' ? 'playBtn1' : 'playBtn2');
-
-    audio.addEventListener('timeupdate', () => {
-      const pct = audio.duration ? (audio.currentTime / audio.duration) * 100 : 0;
-      pb.style.width = pct + '%';
-      ct.textContent = formatTime(audio.currentTime);
-    });
-
-    audio.addEventListener('loadedmetadata', () => {
-      dur.textContent = formatTime(audio.duration);
-    });
-
-    audio.addEventListener('ended', () => {
-      btn.innerHTML = '&#9654;';
-    });
-
-    pw.addEventListener('click', (e) => {
-      const rect = pw.getBoundingClientRect();
-      audio.currentTime = ((e.clientX - rect.left) / rect.width) * audio.duration;
-    });
-  });
-</script>
-
-</body>
-</html>
+</script></body></html>
