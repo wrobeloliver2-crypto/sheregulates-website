@@ -282,7 +282,7 @@ blockquote { border-left: 3px solid var(--beige-dark); padding: 1rem 1.5rem; mar
 /* ── STRAND QUOTE OVERLAY ── */
 .strand-quote {
   position: absolute;
-  bottom: 0; right: 0;
+  bottom: 0; left: 0;
   width: 42%;
   background: rgba(30,27,24,.72);
   backdrop-filter: blur(6px);
