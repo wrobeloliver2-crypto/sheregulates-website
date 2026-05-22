@@ -5,315 +5,47 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Impressum – She Regulates</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=Jost:wght@300;400;500&display=swap" rel="stylesheet">
-<style>
-  :root {
-    --rose: #d9a49a;
-    --rose-light: #f0dbd7;
-    --rose-dark: #b8807a;
-    --cream: #faf7f3;
-    --cream-dark: #f0ebe2;
-    --charcoal: #2a2520;
-    --warm-grey: #8a8078;
-  }
-
-  * { margin: 0; padding: 0; box-sizing: border-box; }
-  html { scroll-behavior: smooth; }
-
-  body {
-    font-family: 'Jost', sans-serif;
-    background: var(--cream);
-    color: var(--charcoal);
-    font-weight: 300;
-  }
-
-  /* NAV */
-  nav {
-    background: var(--charcoal);
-    padding: 20px 48px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-  }
-
-  .nav-logo {
-    font-family: 'Cormorant Garamond', serif;
-    font-size: 22px;
-    font-weight: 400;
-    letter-spacing: 3px;
-    color: white;
-    text-decoration: none;
-    text-transform: uppercase;
-  }
-
-  .nav-back {
-    font-size: 12px;
-    letter-spacing: 2px;
-    text-transform: uppercase;
-    color: rgba(255,255,255,0.6);
-    text-decoration: none;
-    transition: color 0.3s;
-  }
-
-  .nav-back:hover { color: var(--rose); }
-
-  /* CONTENT */
-  .page-wrapper {
-    max-width: 780px;
-    margin: 0 auto;
-    padding: 80px 48px 120px;
-  }
-
-  .page-eyebrow {
-    font-size: 11px;
-    letter-spacing: 4px;
-    text-transform: uppercase;
-    color: var(--rose);
-    margin-bottom: 16px;
-    display: block;
-  }
-
-  .page-title {
-    font-family: 'Cormorant Garamond', serif;
-    font-size: 56px;
-    font-weight: 300;
-    color: var(--charcoal);
-    margin-bottom: 60px;
-    line-height: 1.1;
-  }
-
-  .divider {
-    width: 40px;
-    height: 1px;
-    background: var(--rose);
-    margin: 0 0 60px;
-  }
-
-  .section {
-    margin-bottom: 48px;
-  }
-
-  .section h2 {
-    font-family: 'Jost', sans-serif;
-    font-size: 11px;
-    font-weight: 500;
-    letter-spacing: 3px;
-    text-transform: uppercase;
-    color: var(--rose-dark);
-    margin-bottom: 14px;
-  }
-
-  .section p, .section a {
-    font-size: 16px;
-    line-height: 1.9;
-    color: var(--warm-grey);
-  }
-
-  .section a {
-    color: var(--rose-dark);
-    text-decoration: none;
-    border-bottom: 1px solid var(--rose-light);
-    transition: color 0.2s;
-  }
-
-  .section a:hover { color: var(--charcoal); }
-
-  .section-border {
-    border-top: 1px solid var(--cream-dark);
-    padding-top: 48px;
-  }
-
-  /* FOOTER */
-  footer {
-    background: var(--charcoal);
-    color: rgba(255,255,255,0.4);
-    padding: 32px 48px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    font-size: 12px;
-  }
-
-  .footer-logo {
-    font-family: 'Cormorant Garamond', serif;
-    font-size: 18px;
-    color: white;
-    letter-spacing: 3px;
-    text-transform: uppercase;
-  }
-
-  .footer-links {
-    display: flex;
-    gap: 24px;
-    list-style: none;
-  }
-
-  .footer-links a {
-    color: rgba(255,255,255,0.4);
-    text-decoration: none;
-    font-size: 11px;
-    letter-spacing: 2px;
-    text-transform: uppercase;
-    transition: color 0.3s;
-  }
-
-  .footer-links a:hover { color: var(--rose); }
-
-
-  /* MOBILE MENU */
-  .hamburger {
-    display: none;
-    flex-direction: column;
-    gap: 5px;
-    cursor: pointer;
-    padding: 4px;
-    background: none;
-    border: none;
-  }
-
-  .hamburger span {
-    display: block;
-    width: 24px;
-    height: 1.5px;
-    background: rgba(255,255,255,0.8);
-    transition: all 0.3s ease;
-  }
-
-  .hamburger.open span:nth-child(1) { transform: translateY(6.5px) rotate(45deg); }
-  .hamburger.open span:nth-child(2) { opacity: 0; }
-  .hamburger.open span:nth-child(3) { transform: translateY(-6.5px) rotate(-45deg); }
-
-  @media (max-width: 768px) {
-    .hamburger { display: flex; }
-
-    .nav-links {
-      display: none;
-      position: fixed;
-      top: 64px;
-      left: 0; right: 0;
-      background: var(--charcoal);
-      flex-direction: column;
-      gap: 0;
-      padding: 16px 0 24px;
-      border-top: 1px solid rgba(255,255,255,0.08);
-      z-index: 99;
-    }
-
-    .nav-links.open { display: flex; }
-
-    .nav-links li { width: 100%; }
-
-    .nav-links a {
-      display: block;
-      padding: 14px 28px;
-      font-size: 12px;
-      letter-spacing: 2px;
-      border-bottom: 1px solid rgba(255,255,255,0.05);
-    }
-
-    .nav-links .nav-cta {
-      margin: 16px 28px 0;
-      display: block;
-      text-align: center;
-      border-radius: 30px;
-      padding: 14px 28px;
-      background: var(--rose);
-    }
-  }
-
-  @media (max-width: 768px) {
-    nav { padding: 16px 24px; }
-    .page-wrapper { padding: 48px 24px 80px; }
-    .page-title { font-size: 40px; }
-    footer { flex-direction: column; gap: 16px; text-align: center; }
-  }
-</style>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,300;0,400;0,500;1,300;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
 </head>
 <body>
-
-<nav>
-  <a href="index.html" class="nav-logo">She Regulates</a>
-  <a href="index.html" class="nav-back">← Zurück zur Startseite</a>
-  <button class="hamburger" id="hamburger" onclick="toggleMenu()" aria-label="Menu">
-    <span></span><span></span><span></span>
-  </button>
+<nav id="navbar">
+  <div class="nav-inner">
+    <a href="index.html" class="logo">She <span>Regulates</span></a>
+    <ul class="nav-links">
+      <li><a href="index.html">Das Retreat</a></li>
+      <li><a href="marke.html">Die Marke</a></li>
+      <li><a href="programm.html">10-Wochen</a></li>
+      <li><a href="atemschule.html">Atemschule</a></li>
+      <li><a href="podcast.html">Podcast</a></li>
+      <li><a href="wissen.html">Wissen</a></li>
+      <li><a href="index.html#anfragen" class="nav-cta">Anfragen</a></li>
+    </ul>
+    <button class="hamburger" id="hamburger" aria-label="Menü"><span></span><span></span><span></span></button>
+  </div>
 </nav>
-
-<div class="page-wrapper">
-  <span class="page-eyebrow">Rechtliches</span>
-  <h1 class="page-title">Impressum</h1>
-  <div class="divider"></div>
-
-  <div class="section">
-    <h2>Angaben gemäß § 5 TMG</h2>
-    <p>
-      Pilates Company Lübeck<br>
-      Inhaberin: Hanna Wrobel<br>
-      Segeberger Str. 1<br>
-      23617 Stockelsdorf
-    </p>
-  </div>
-
-  <div class="section section-border">
-    <h2>Kontakt</h2>
-    <p>
-      E-Mail: <a href="mailto:hanna.wrobel@pilatescompany.de">hanna.wrobel@pilatescompany.de</a>
-    </p>
-  </div>
-
-  <div class="section section-border">
-    <h2>Umsatzsteuer</h2>
-    <p>
-      Umsatzsteuer-Identifikationsnummer gemäß § 27 a Umsatzsteuergesetz:<br>
-      25/076/61001 · Finanzamt Ostholstein
-    </p>
-  </div>
-
-  <div class="section section-border">
-    <h2>Aufsichtsbehörde</h2>
-    <p>
-      Gesundheitsamt Kreis Ostholstein<br>
-      Holstenstraße 52, 23701 Eutin<br>
-      Telefon: 04521 788-100<br>
-      Fax: 04521 788-188<br>
-      E-Mail: <a href="mailto:gesundheitsamt@kreis-oh.de">gesundheitsamt@kreis-oh.de</a><br>
-      <a href="https://www.kreis-oh.de/Soziales/Gesundheitsamt" target="_blank">www.kreis-oh.de/Soziales/Gesundheitsamt</a>
-    </p>
-  </div>
-
-  <div class="section section-border">
-    <h2>Verantwortlich für den Inhalt</h2>
-    <p>
-      Hanna Wrobel<br>
-      Segeberger Str. 1<br>
-      23617 Stockelsdorf
-    </p>
-  </div>
-
-  <div class="section section-border">
-    <h2>Haftungsausschluss</h2>
-    <p>
-      Die Inhalte dieser Website wurden mit größter Sorgfalt erstellt. Für die Richtigkeit, Vollständigkeit und Aktualität der Inhalte können wir jedoch keine Gewähr übernehmen. Als Diensteanbieter sind wir gemäß § 7 Abs. 1 TMG für eigene Inhalte auf diesen Seiten nach den allgemeinen Gesetzen verantwortlich. Nach §§ 8 bis 10 TMG sind wir als Diensteanbieter jedoch nicht verpflichtet, übermittelte oder gespeicherte fremde Informationen zu überwachen.
-    </p>
-  </div>
-
-  <div class="section section-border">
-    <h2>Urheberrecht</h2>
-    <p>
-      Die durch die Seitenbetreiberin erstellten Inhalte und Werke auf diesen Seiten unterliegen dem deutschen Urheberrecht. Die Vervielfältigung, Bearbeitung, Verbreitung und jede Art der Verwertung außerhalb der Grenzen des Urheberrechtes bedürfen der schriftlichen Zustimmung der jeweiligen Autorin bzw. des Erstellers.
-    </p>
-  </div>
-
-</div>
-
-<footer>
-  <div class="footer-logo">She Regulates</div>
-  <p>© 2025 Hanna Wrobel · sheregulates.de</p>
-  <ul class="footer-links">
-    <li><a href="impressum.html">Impressum</a></li>
-    <li><a href="datenschutz.html">Datenschutz</a></li>
-  </ul>
-</footer>
-
-</body>
-</html>
+<div class="mobile-menu" id="mobileMenu">  <a href="index.html">Das Retreat</a>  <a href="marke.html">Die Marke</a>  <a href="programm.html">10-Wochen</a>  <a href="atemschule.html">Atemschule</a>  <a href="podcast.html">Podcast</a>  <a href="wissen.html">Wissen</a>  <a href="index.html#anfragen" class="btn btn-primary" style="margin-top:1rem">Anfragen</a></div>
+<div class="page-hero"><div class="container"><span class="tag">Rechtliches</span><h1>Impressum</h1></div></div>
+<section class="section"><div class="container" style="max-width:720px">
+  <h3>Angaben gemäß § 5 TMG</h3>
+  <p style="margin-top:1rem">Pilates Company Lübeck<br>Inhaberin: Hanna Wrobel<br>Segeberger Str. 1<br>23617 Stockelsdorf</p>
+  <h3 style="margin-top:2rem">Kontakt</h3>
+  <p style="margin-top:1rem">E-Mail: <a href="mailto:hanna.wrobel@pilatescompany.de" style="color:var(--rose-dark)">hanna.wrobel@pilatescompany.de</a></p>
+  <h3 style="margin-top:2rem">Umsatzsteuer</h3>
+  <p style="margin-top:1rem">Umsatzsteuer-Identifikationsnummer gemäß § 27 a UStG: 25/076/61001 · Finanzamt Ostholstein</p>
+  <h3 style="margin-top:2rem">Verantwortlich für den Inhalt</h3>
+  <p style="margin-top:1rem">Hanna Wrobel, Segeberger Str. 1, 23617 Stockelsdorf</p>
+  <h3 style="margin-top:2rem">Haftungsausschluss</h3>
+  <p style="margin-top:1rem">Die Inhalte dieser Website wurden mit größter Sorgfalt erstellt. Für die Richtigkeit, Vollständigkeit und Aktualität der Inhalte können wir jedoch keine Gewähr übernehmen.</p>
+  <p style="margin-top:.75rem">Die durch die Seitenbetreiberin erstellten Inhalte und Werke auf diesen Seiten unterliegen dem deutschen Urheberrecht. Die Vervielfältigung, Bearbeitung, Verbreitung und jede Art der Verwertung außerhalb der Grenzen des Urheberrechtes bedürfen der schriftlichen Zustimmung der jeweiligen Autorin.</p>
+  <p style="margin-top:2rem"><a href="index.html" style="color:var(--rose-dark)">← Zurück zur Startseite</a></p>
+</div></section>
+<footer><div class="container"><div class="footer-inner"><div><a href="index.html" class="logo">She <span>Regulates</span></a><p>Regulation für Frauen in der zweiten Lebenshälfte.</p></div><div class="footer-links"><a href="index.html">Das Retreat</a><a href="marke.html">Die Marke</a><a href="programm.html">10-Wochen-Programm</a><a href="atemschule.html">Atemschule</a><a href="podcast.html">Podcast</a><a href="wissen.html">Wissen</a></div><div class="footer-legal"><a href="impressum.html">Impressum</a><a href="datenschutz.html">Datenschutz</a><p style="margin-top:.75rem">© 2025 Hanna Wrobel &amp; Sina Töpfer</p></div></div></div></footer>
+<script>
+  const nb=document.getElementById('navbar');
+  window.addEventListener('scroll',()=>nb.classList.toggle('scrolled',window.scrollY>40));
+  const hb=document.getElementById('hamburger'),mm=document.getElementById('mobileMenu');
+  hb.addEventListener('click',()=>{mm.classList.toggle('open');hb.classList.toggle('open');});
+  mm.querySelectorAll('a').forEach(a=>a.addEventListener('click',()=>{mm.classList.remove('open');hb.classList.remove('open');}));
+  
+</script></body></html>
