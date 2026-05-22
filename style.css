@@ -117,7 +117,7 @@ nav {
 
 /* ── STRAND BANNER ── */
 .strand-banner { width: 100%; height: 420px; overflow: hidden; }
-.strand-img { width: 100%; height: 100%; object-fit: cover; object-position: center 40%; display: block; }
+.strand-img { width: 100%; height: 100%; object-fit: cover; object-position: center 20%; display: block; }
 
 /* ── STATS BAR ── */
 .stats-bar { background: var(--black); padding: 2rem 0; }
@@ -228,9 +228,53 @@ blockquote { border-left: 3px solid var(--beige-dark); padding: 1rem 1.5rem; mar
 }
 @media (max-width: 768px) {
   .nav-links { display: none; }
+  .vision-grid { grid-template-columns: 1fr !important; }
   .hamburger { display: flex; }
   .hero-btns { flex-direction: column; align-items: flex-start; }
   .stats-grid .stat-divider { display: none; }
   .strand-banner { height: 260px; }
   .hero-cream { padding: 5rem 0 3rem; }
+}
+
+/* ── TIMETABLE ── */
+.timetable { width: 100%; border-collapse: collapse; margin-top: 2rem; }
+.timetable th {
+  background: var(--black); color: #fff;
+  padding: .9rem 1.25rem; font-family: var(--sans);
+  font-size: .78rem; font-weight: 500; letter-spacing: .08em;
+  text-transform: uppercase; text-align: left;
+}
+.timetable th:first-child { width: 110px; }
+.timetable td {
+  padding: .85rem 1.25rem; font-size: .9rem;
+  border-bottom: 1px solid var(--border); vertical-align: top;
+  color: var(--text-mid);
+}
+.timetable tr:last-child td { border-bottom: none; }
+.timetable tr:nth-child(even) td { background: var(--beige-light); }
+.timetable .time {
+  font-family: var(--sans); font-weight: 500;
+  color: var(--text); font-size: .85rem; white-space: nowrap;
+}
+.timetable .discipline {
+  display: inline-block; font-size: .7rem; font-weight: 500;
+  letter-spacing: .08em; text-transform: uppercase;
+  padding: .15rem .55rem; border-radius: 100px; margin-bottom: .25rem;
+}
+.disc-pilates  { background: #e8e0d0; color: #4a3f35; }
+.disc-yoga     { background: #dde8df; color: #2d4a33; }
+.disc-breath   { background: #dfe4ed; color: #2d3a4a; }
+.disc-ernaehr  { background: #ede8dc; color: #4a3d28; }
+.disc-frei     { background: var(--beige); color: var(--text-mid); }
+.disc-gemeins  { background: #f0ebe2; color: var(--text-mid); }
+.timetable strong { display: block; color: var(--text); font-weight: 500; margin-bottom: .15rem; }
+.day-header { background: var(--beige) !important; }
+.day-header td {
+  font-family: var(--heading); font-size: 1.1rem !important;
+  font-weight: 400; color: var(--text) !important;
+  padding: 1rem 1.25rem !important; border-bottom: 2px solid var(--beige-dark) !important;
+}
+@media (max-width: 768px) {
+  .timetable th:nth-child(n+3), .timetable td:nth-child(n+3) { display: none; }
+  .timetable { font-size: .82rem; }
 }
