@@ -1,0 +1,892 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Wissensdatenbank – She Regulates</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Jost:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --rose: #d9a49a;
+    --rose-light: #f0dbd7;
+    --rose-dark: #b8807a;
+    --cream: #faf7f3;
+    --cream-dark: #f0ebe2;
+    --sage: #7d9e8c;
+    --charcoal: #2a2520;
+    --warm-grey: #8a8078;
+    --white: #ffffff;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'Jost', sans-serif;
+    background: var(--cream);
+    color: var(--charcoal);
+    font-weight: 300;
+    overflow-x: hidden;
+  }
+
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    background: var(--charcoal);
+    padding: 20px 48px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .nav-logo {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 22px;
+    font-weight: 400;
+    letter-spacing: 3px;
+    color: var(--white);
+    text-decoration: none;
+    text-transform: uppercase;
+  }
+
+  .nav-links {
+    display: flex;
+    gap: 28px;
+    list-style: none;
+  }
+
+  .nav-links a {
+    font-size: 11px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.6);
+    text-decoration: none;
+    transition: color 0.3s;
+  }
+
+  .nav-links a:hover, .nav-links a.active { color: var(--rose); }
+
+  .nav-cta {
+    color: var(--white) !important;
+    background: var(--rose);
+    padding: 10px 22px;
+    border-radius: 30px;
+    transition: background 0.3s;
+  }
+
+  .nav-cta:hover { background: var(--rose-dark) !important; }
+
+  .hamburger {
+    display: none;
+    flex-direction: column;
+    gap: 5px;
+    cursor: pointer;
+    padding: 4px;
+    background: none;
+    border: none;
+  }
+
+  .hamburger span {
+    display: block;
+    width: 24px;
+    height: 1.5px;
+    background: rgba(255,255,255,0.8);
+    transition: all 0.3s ease;
+  }
+
+  .hamburger.open span:nth-child(1) { transform: translateY(6.5px) rotate(45deg); }
+  .hamburger.open span:nth-child(2) { opacity: 0; }
+  .hamburger.open span:nth-child(3) { transform: translateY(-6.5px) rotate(-45deg); }
+
+  /* HERO */
+  .page-hero {
+    background: var(--charcoal);
+    padding: 160px 48px 100px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .page-hero::before {
+    content: '';
+    position: absolute;
+    top: -100px; left: 50%;
+    transform: translateX(-50%);
+    width: 600px; height: 600px;
+    border-radius: 50%;
+    background: var(--rose);
+    opacity: 0.04;
+  }
+
+  .page-eyebrow {
+    font-size: 11px;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    color: var(--rose);
+    margin-bottom: 20px;
+    display: block;
+  }
+
+  .page-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(48px, 7vw, 88px);
+    font-weight: 300;
+    color: var(--white);
+    line-height: 1.05;
+    margin-bottom: 24px;
+  }
+
+  .page-title em { font-style: italic; color: var(--rose-light); }
+
+  .page-lead {
+    font-size: 17px;
+    line-height: 1.85;
+    color: rgba(255,255,255,0.5);
+    max-width: 620px;
+    margin: 0 auto 48px;
+  }
+
+  /* TOPIC NAV */
+  .topic-nav {
+    display: flex;
+    gap: 12px;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+
+  .topic-pill {
+    font-size: 11px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    border: 1px solid rgba(255,255,255,0.2);
+    padding: 8px 18px;
+    border-radius: 20px;
+    color: rgba(255,255,255,0.6);
+    text-decoration: none;
+    transition: border-color 0.3s, color 0.3s;
+    cursor: pointer;
+    background: none;
+  }
+
+  .topic-pill:hover { border-color: var(--rose); color: var(--rose); }
+
+  /* MAIN LAYOUT */
+  .main-wrap {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 80px 48px 120px;
+    display: grid;
+    grid-template-columns: 240px 1fr;
+    gap: 60px;
+    align-items: start;
+  }
+
+  /* SIDEBAR */
+  .sidebar {
+    position: sticky;
+    top: 100px;
+  }
+
+  .sidebar-label {
+    font-size: 10px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--rose);
+    margin-bottom: 20px;
+  }
+
+  .sidebar-nav {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+  }
+
+  .sidebar-nav a {
+    display: block;
+    font-size: 13px;
+    color: var(--warm-grey);
+    text-decoration: none;
+    padding: 10px 14px;
+    border-radius: 8px;
+    transition: background 0.2s, color 0.2s;
+    line-height: 1.4;
+  }
+
+  .sidebar-nav a:hover {
+    background: var(--cream-dark);
+    color: var(--charcoal);
+  }
+
+  .sidebar-nav a.active {
+    background: var(--rose-light);
+    color: var(--rose-dark);
+    font-weight: 400;
+  }
+
+  /* CONTENT */
+  .content { min-width: 0; }
+
+  .topic-section {
+    margin-bottom: 80px;
+    scroll-margin-top: 100px;
+  }
+
+  .topic-header {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin-bottom: 32px;
+    padding-bottom: 20px;
+    border-bottom: 1px solid var(--cream-dark);
+  }
+
+  .topic-icon {
+    width: 48px;
+    height: 48px;
+    border-radius: 12px;
+    background: var(--rose-light);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+
+  .topic-icon-line {
+    width: 20px;
+    height: 2px;
+    background: var(--rose-dark);
+    position: relative;
+  }
+
+  .topic-icon-line::before {
+    content: '';
+    position: absolute;
+    top: -5px; left: 4px;
+    width: 12px; height: 2px;
+    background: var(--rose-dark);
+  }
+
+  .topic-icon-line::after {
+    content: '';
+    position: absolute;
+    top: 5px; left: 8px;
+    width: 8px; height: 2px;
+    background: var(--rose-dark);
+  }
+
+  .topic-eyebrow {
+    font-size: 10px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--rose);
+    margin-bottom: 4px;
+  }
+
+  .topic-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 32px;
+    font-weight: 300;
+    color: var(--charcoal);
+    line-height: 1.2;
+  }
+
+  .topic-title em { font-style: italic; color: var(--rose-dark); }
+
+  /* ARTICLE */
+  .article-lead {
+    font-size: 17px;
+    line-height: 1.85;
+    color: var(--charcoal);
+    margin-bottom: 28px;
+    font-style: italic;
+    border-left: 3px solid var(--rose);
+    padding-left: 20px;
+  }
+
+  .article-text {
+    font-size: 15px;
+    line-height: 1.9;
+    color: var(--warm-grey);
+    margin-bottom: 20px;
+  }
+
+  .article-h3 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 22px;
+    font-weight: 400;
+    color: var(--charcoal);
+    margin: 32px 0 12px;
+  }
+
+  .fact-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+    margin: 24px 0;
+  }
+
+  .fact-card {
+    background: var(--cream-dark);
+    border-radius: 12px;
+    padding: 20px;
+  }
+
+  .fact-label {
+    font-size: 10px;
+    letter-spacing: 2.5px;
+    text-transform: uppercase;
+    color: var(--rose-dark);
+    margin-bottom: 6px;
+  }
+
+  .fact-text {
+    font-size: 14px;
+    color: var(--charcoal);
+    line-height: 1.6;
+  }
+
+  .tip-list {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin: 20px 0;
+  }
+
+  .tip-list li {
+    font-size: 15px;
+    color: var(--warm-grey);
+    padding-left: 20px;
+    position: relative;
+    line-height: 1.6;
+  }
+
+  .tip-list li::before {
+    content: '';
+    position: absolute;
+    left: 0; top: 10px;
+    width: 8px; height: 1px;
+    background: var(--rose);
+  }
+
+  .highlight-box {
+    background: var(--charcoal);
+    border-radius: 16px;
+    padding: 28px 32px;
+    margin: 28px 0;
+  }
+
+  .highlight-box p {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 20px;
+    font-style: italic;
+    color: var(--rose-light);
+    line-height: 1.5;
+  }
+
+  .disclaimer {
+    background: var(--rose-light);
+    border-radius: 10px;
+    padding: 16px 20px;
+    margin-top: 32px;
+    font-size: 12px;
+    color: var(--rose-dark);
+    line-height: 1.6;
+    letter-spacing: 0.5px;
+  }
+
+  .section-divider {
+    height: 1px;
+    background: var(--cream-dark);
+    margin: 80px 0;
+  }
+
+  /* FOOTER */
+  footer {
+    background: var(--charcoal);
+    color: rgba(255,255,255,0.4);
+    padding: 32px 48px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-size: 12px;
+  }
+
+  .footer-logo {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 18px;
+    color: var(--white);
+    letter-spacing: 3px;
+    text-transform: uppercase;
+  }
+
+  .footer-links { display: flex; gap: 24px; list-style: none; }
+
+  .footer-links a {
+    color: rgba(255,255,255,0.4);
+    text-decoration: none;
+    font-size: 11px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    transition: color 0.3s;
+  }
+
+  .footer-links a:hover { color: var(--rose); }
+
+  @media (max-width: 768px) {
+    nav { padding: 16px 24px; }
+    .hamburger { display: flex; }
+    .nav-links {
+      display: none;
+      position: fixed;
+      top: 64px; left: 0; right: 0;
+      background: var(--charcoal);
+      flex-direction: column;
+      gap: 0;
+      padding: 16px 0 24px;
+      border-top: 1px solid rgba(255,255,255,0.08);
+      z-index: 99;
+    }
+    .nav-links.open { display: flex; }
+    .nav-links li { width: 100%; }
+    .nav-links a { display: block; padding: 14px 28px; border-bottom: 1px solid rgba(255,255,255,0.05); }
+    .nav-links .nav-cta { margin: 16px 28px 0; display: block; text-align: center; border-radius: 30px; padding: 14px 28px; background: var(--rose); }
+    .page-hero { padding: 120px 24px 70px; }
+    .main-wrap { grid-template-columns: 1fr; padding: 48px 24px 80px; gap: 0; }
+    .sidebar { display: none; }
+    .fact-grid { grid-template-columns: 1fr; }
+    footer { flex-direction: column; gap: 16px; text-align: center; }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="index.html" class="nav-logo">She Regulates</a>
+  <ul class="nav-links" id="navLinks">
+    <li><a href="index.html#retreat">Das Retreat</a></li>
+    <li><a href="marke.html">Die Marke</a></li>
+    <li><a href="programm.html">10-Wochen</a></li>
+    <li><a href="atemschule.html">Atemschule</a></li>
+    <li><a href="podcast.html">Podcast</a></li>
+    <li><a href="wissen.html" class="active">Wissen</a></li>
+    <li><a href="index.html#kontakt" class="nav-cta">Anfragen</a></li>
+  </ul>
+  <button class="hamburger" id="hamburger" onclick="toggleMenu()" aria-label="Menu">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+
+<!-- HERO -->
+<section class="page-hero">
+  <span class="page-eyebrow">She Regulates · Wissen</span>
+  <h1 class="page-title">Dein Körper.<br><em>Verstehen.</em></h1>
+  <p class="page-lead">Fundiertes Basiswissen zu Hormonen, Nervensystem, Ernährung und Bewegung – speziell für Frauen ab 40. Klar formuliert, ohne Fachjargon.</p>
+  <div class="topic-nav">
+    <a href="#wechseljahre" class="topic-pill">Wechseljahre</a>
+    <a href="#nervensystem" class="topic-pill">Nervensystem</a>
+    <a href="#ernaehrung" class="topic-pill">Ernährung</a>
+    <a href="#krafttraining" class="topic-pill">Krafttraining</a>
+    <a href="#naehrstoffe" class="topic-pill">Nährstoffe</a>
+    <a href="#gelenke" class="topic-pill">Gelenke</a>
+    <a href="#haut" class="topic-pill">Haut & Haare</a>
+    <a href="#oestrogen" class="topic-pill">Hormonsystem</a>
+  </div>
+</section>
+
+<!-- MAIN -->
+<div class="main-wrap">
+
+  <!-- SIDEBAR -->
+  <aside class="sidebar">
+    <div class="sidebar-label">Themen</div>
+    <ul class="sidebar-nav">
+      <li><a href="#wechseljahre">Wechseljahre</a></li>
+      <li><a href="#nervensystem">Nervensystem & Stress</a></li>
+      <li><a href="#ernaehrung">Ernährung ab 40</a></li>
+      <li><a href="#krafttraining">Krafttraining</a></li>
+      <li><a href="#naehrstoffe">Nährstoffe & Supplements</a></li>
+      <li><a href="#gelenke">Gelenkgesundheit</a></li>
+      <li><a href="#haut">Haut, Haare & Bindegewebe</a></li>
+      <li><a href="#oestrogen">Hormonsystem verstehen</a></li>
+    </ul>
+  </aside>
+
+  <!-- CONTENT -->
+  <main class="content">
+
+    <!-- 1. WECHSELJAHRE -->
+    <section class="topic-section" id="wechseljahre">
+      <div class="topic-header">
+        <div class="topic-icon"><div class="topic-icon-line"></div></div>
+        <div>
+          <div class="topic-eyebrow">Grundlagen</div>
+          <h2 class="topic-title">Wechseljahre – <em>was wirklich passiert</em></h2>
+        </div>
+      </div>
+
+      <p class="article-lead">Die Wechseljahre sind kein Versagen des Körpers. Sie sind ein komplexer, intelligenter Übergangsprozess – und der Beginn einer neuen Phase deines Lebens.</p>
+
+      <p class="article-text">Ab etwa Mitte 40 beginnt der Körper, die Hormonproduktion schrittweise umzustellen. Östrogen und Progesteron – die beiden zentralen weiblichen Sexualhormone – werden nicht mehr in gleichem Maße produziert. Diese Veränderung betrifft nicht nur den Zyklus, sondern das gesamte System: Schlaf, Stimmung, Stoffwechsel, Knochen, Haut und Nervensystem reagieren auf die neue hormonelle Realität.</p>
+
+      <h3 class="article-h3">Die vier Phasen</h3>
+
+      <div class="fact-grid">
+        <div class="fact-card">
+          <div class="fact-label">Prämenopause</div>
+          <div class="fact-text">Ab Mitte 40. Erste hormonelle Schwankungen, unregelmäßigerer Zyklus. Viele Frauen bemerken in dieser Phase noch wenig.</div>
+        </div>
+        <div class="fact-card">
+          <div class="fact-label">Perimenopause</div>
+          <div class="fact-text">Die aktivste Phase. Starke Hormonschwankungen, typische Symptome wie Hitzewallungen und Schlafstörungen treten auf.</div>
+        </div>
+        <div class="fact-card">
+          <div class="fact-label">Menopause</div>
+          <div class="fact-text">Der Zeitpunkt der letzten Regelblutung – rückblickend feststellbar, wenn 12 Monate keine Blutung aufgetreten ist.</div>
+        </div>
+        <div class="fact-card">
+          <div class="fact-label">Postmenopause</div>
+          <div class="fact-text">Der Körper stabilisiert sich langsam auf einem neuen Hormonniveau. Viele Beschwerden lassen nach, andere verändern sich.</div>
+        </div>
+      </div>
+
+      <h3 class="article-h3">Häufige Symptome</h3>
+      <p class="article-text">Die Bandbreite ist gross: Etwa ein Drittel der Frauen erlebt kaum Beschwerden, ein weiteres Drittel milde Veränderungen – und ein Drittel belastende Symptome. Typisch sind Hitzewallungen, Schlafstörungen, Stimmungsschwankungen, Erschöpfung, Gewichtsveränderungen vor allem am Bauch, Konzentrationsschwäche und Gelenkschmerzen.</p>
+
+      <div class="highlight-box">
+        <p>Die Wechseljahre dauern insgesamt 10 bis 15 Jahre – sie sind kein Ereignis, sondern ein langer, individueller Prozess. Was dir in dieser Zeit hilft, ist nicht Durchhalten, sondern Verstehen.</p>
+      </div>
+
+      <p class="article-text">Was viele nicht wissen: Die Symptome sind nicht nur durch Östrogenmangel erklärbar. Das Nervensystem, der Cortisolspiegel, der Schlaf und die Ernährung spielen eine ebenso entscheidende Rolle – und sind beeinflussbar.</p>
+
+      <div class="disclaimer">Hinweis: Diese Informationen ersetzen keine ärztliche Beratung. Bei starken Beschwerden empfehlen wir, eine Gynäkologin oder Ärztin aufzusuchen.</div>
+    </section>
+
+    <div class="section-divider"></div>
+
+    <!-- 2. NERVENSYSTEM -->
+    <section class="topic-section" id="nervensystem">
+      <div class="topic-header">
+        <div class="topic-icon"><div class="topic-icon-line"></div></div>
+        <div>
+          <div class="topic-eyebrow">Regulation</div>
+          <h2 class="topic-title">Nervensystem & Stress – <em>der unterschätzte Faktor</em></h2>
+        </div>
+      </div>
+
+      <p class="article-lead">Stress ist kein Charakterproblem. Er ist eine biologische Reaktion – und ab 40 reagiert dein Nervensystem empfindlicher darauf als früher.</p>
+
+      <p class="article-text">Das autonome Nervensystem reguliert alle unbewussten Körperfunktionen: Herzschlag, Verdauung, Schlaf, Immunsystem und Hormonhaushalt. Es arbeitet in zwei Modi: Sympathikus (Aktivierung, Stressreaktion) und Parasympathikus (Erholung, Regeneration). Dauerstress bedeutet, dass der Sympathikus dauerhaft dominiert – mit weitreichenden Folgen.</p>
+
+      <h3 class="article-h3">Was Dauerstress in deinem Körper auslöst</h3>
+      <ul class="tip-list">
+        <li>Cortisol bleibt dauerhaft erhöht – das stört Schlaf, Gewicht und Immunfunktion</li>
+        <li>Die Hormonproduktion wird beeinträchtigt, weil Cortisol und Östrogen um dieselben Vorstufen konkurrieren</li>
+        <li>Regeneration findet nicht mehr ausreichend statt – Erschöpfung wird chronisch</li>
+        <li>Das Nervensystem verliert an Flexibilität: Es kann zwischen Anspannung und Entspannung nicht mehr einfach wechseln</li>
+      </ul>
+
+      <h3 class="article-h3">Warum mehr Sport hier nicht hilft</h3>
+      <p class="article-text">Intensives Training ist eine weitere Stressbelastung für den Körper. Wer bereits in einem Dauerstresszustand lebt und dann hochintensiv trainiert, gibt dem Nervensystem keinen Erholungsimpuls – sondern einen weiteren Aktivierungsreiz. Das Ergebnis: mehr Erschöpfung, schlechterer Schlaf, stagnierende Ergebnisse.</p>
+
+      <div class="highlight-box">
+        <p>Das Nervensystem braucht Sicherheit, um sich zu regulieren. Nicht mehr Leistung – sondern mehr Stabilität von innen.</p>
+      </div>
+
+      <h3 class="article-h3">Was wirklich hilft</h3>
+      <ul class="tip-list">
+        <li>Atemarbeit: der direkteste Zugang zum Parasympathikus</li>
+        <li>Somatische Bewegung: sanftes Pilates und Yoga aktivieren das Nervensystem ohne es zu überlasten</li>
+        <li>Schlafhygiene: regelmäßige Schlafzeiten stabilisieren den Cortisolrhythmus</li>
+        <li>Naturkontakt und Stille: das Nervensystem reguliert sich durch Input-Reduktion</li>
+      </ul>
+    </section>
+
+    <div class="section-divider"></div>
+
+    <!-- 3. ERNÄHRUNG -->
+    <section class="topic-section" id="ernaehrung">
+      <div class="topic-header">
+        <div class="topic-icon"><div class="topic-icon-line"></div></div>
+        <div>
+          <div class="topic-eyebrow">Ernährung</div>
+          <h2 class="topic-title">Ernährung ab 40 – <em>weniger Regeln, mehr Wirkung</em></h2>
+        </div>
+      </div>
+
+      <p class="article-lead">Ab der Lebensmitte verändert sich die Art, wie dein Körper Nährstoffe aufnimmt und verwertet. Nicht weniger essen ist die Antwort – sondern klüger essen.</p>
+
+      <p class="article-text">Drei Veränderungen sind ab 40 besonders relevant: Der Fettstoffwechsel arbeitet anders, Kohlenhydrate werden langsamer verwertet und der Proteinbedarf steigt. Wer genauso isst wie mit 30, bekommt weniger heraus – und das macht sich bemerkbar.</p>
+
+      <h3 class="article-h3">Blutzucker – der Schlüssel zur hormonellen Balance</h3>
+      <p class="article-text">Stark schwankender Blutzucker belastet das Hormonsystem, erhöht Cortisol und begünstigt Gewichtszunahme am Bauch. Gleichmäßiger Blutzucker dagegen stabilisiert Energie, Stimmung und Schlaf. Das gelingt durch ausreichend Protein und gesunde Fette bei jeder Mahlzeit, weniger isolierte Kohlenhydrate und regelmäßige Mahlzeiten ohne lange Pausen.</p>
+
+      <div class="fact-grid">
+        <div class="fact-card">
+          <div class="fact-label">Protein</div>
+          <div class="fact-text">Ab 40 steigt der Proteinbedarf. Mindestens 1,2–1,6g pro kg Körpergewicht täglich – für Muskelerhalt, Knochen und Hormonsynthese.</div>
+        </div>
+        <div class="fact-card">
+          <div class="fact-label">Gesunde Fette</div>
+          <div class="fact-text">Omega-3-Fettsäuren wirken entzündungshemmend und unterstützen das Nervensystem. Fetter Fisch, Leinöl, Walnüsse.</div>
+        </div>
+        <div class="fact-card">
+          <div class="fact-label">Ballaststoffe</div>
+          <div class="fact-text">Unterstützen das Mikrobiom, das ab 40 eine zentrale Rolle für Hormonregulation, Stimmung und Immunsystem spielt.</div>
+        </div>
+        <div class="fact-card">
+          <div class="fact-label">Wasser</div>
+          <div class="fact-text">Das Durstgefühl nimmt mit dem Alter ab. Ausreichend trinken – mindestens 1,5–2 Liter täglich – ist Basisversorgung.</div>
+        </div>
+      </div>
+
+      <h3 class="article-h3">Der Darm als zweites Gehirn</h3>
+      <p class="article-text">Das Darmmikrobiom beeinflusst Stimmung, Stressreaktionen, Gewicht und den Östrogenhaushalt. Eine ballaststoffreiche, vielfältige Ernährung ist die wichtigste Investition in ein gesundes Mikrobiom – keine Pille ersetzt das.</p>
+    </section>
+
+    <div class="section-divider"></div>
+
+    <!-- 4. KRAFTTRAINING -->
+    <section class="topic-section" id="krafttraining">
+      <div class="topic-header">
+        <div class="topic-icon"><div class="topic-icon-line"></div></div>
+        <div>
+          <div class="topic-eyebrow">Bewegung</div>
+          <h2 class="topic-title">Krafttraining ab 40 – <em>stark ohne Überbelastung</em></h2>
+        </div>
+      </div>
+
+      <p class="article-lead">Krafttraining ist ab 40 keine Option mehr – es ist Prävention. Aber die Art, wie du trainierst, entscheidet darüber, ob es nützt oder schadet.</p>
+
+      <p class="article-text">Ab dem 30. Lebensjahr verliert der Körper drei bis fünf Prozent Muskelmasse pro Jahrzehnt. Die Wechseljahre beschleunigen diesen Prozess. Muskelverlust bedeutet: weniger Grundumsatz, schlechtere Insulinsensitivität, schwächere Knochen und mehr Verletzungsanfälligkeit. Das ist kein Schicksal – sondern etwas, das sich aktiv beeinflussen lässt.</p>
+
+      <h3 class="article-h3">Warum Muskeln jetzt so wichtig sind</h3>
+      <ul class="tip-list">
+        <li>Muskeln verbrauchen auch im Ruhezustand Energie – sie schützen vor dem gefürchteten Bauchfettaufbau</li>
+        <li>Krafttraining erhöht die Knochendichte und wirkt Osteoporose entgegen</li>
+        <li>Starke Tiefenmuskulatur schützt Gelenke und verbessert Haltung</li>
+        <li>Progressives Krafttraining verbessert die Insulinsensitivität und reguliert den Blutzucker</li>
+      </ul>
+
+      <div class="highlight-box">
+        <p>Stark sein darf sich ruhig anfühlen. Krafttraining ab 40 ist nicht laut, nicht erschöpfend – es ist präzise, progressiv und nachhaltig.</p>
+      </div>
+
+      <h3 class="article-h3">Wie du richtig trainierst</h3>
+      <p class="article-text">Zwei bis drei gezielte Krafteinheiten pro Woche reichen aus – wenn sie strukturiert sind. Wichtig ist progressive Belastung: Die Übungen werden über Wochen und Monate schrittweise anspruchsvoller. Dazu gehört ausreichend Regenerationszeit. Mehr ist ab 40 selten besser – smarter schon.</p>
+
+      <p class="article-text">Pilates ist eine besonders geeignete Form des Krafttrainings für diese Lebensphase: Die Tiefenmuskulatur wird gezielt angesteuert, der Beckenboden gestärkt, die Körperwahrnehmung geschult – und das Nervensystem reguliert, statt aktiviert.</p>
+    </section>
+
+    <div class="section-divider"></div>
+
+    <!-- 5. NÄHRSTOFFE -->
+    <section class="topic-section" id="naehrstoffe">
+      <div class="topic-header">
+        <div class="topic-icon"><div class="topic-icon-line"></div></div>
+        <div>
+          <div class="topic-eyebrow">Supplements</div>
+          <h2 class="topic-title">Nährstoffe & Supplements – <em>gezielt, nicht blind</em></h2>
+        </div>
+      </div>
+
+      <p class="article-lead">Nahrungsergänzung kann sinnvoll sein – aber nur als Ergänzung zu einer guten Ernährungsbasis, nicht als Ersatz. Und nicht alles, was angeboten wird, ist nötig.</p>
+
+      <p class="article-text">Ab der Lebensmitte verändert sich die Nährstoffaufnahme: Einige Vitalstoffe werden schlechter aus der Nahrung aufgenommen, andere werden in höherer Menge benötigt. Gleichzeitig ist der Markt für Supplements unübersichtlich. Die entscheidende Frage ist nicht "Was soll ich nehmen?" – sondern "Was brauche ich wirklich?"</p>
+
+      <h3 class="article-h3">Besonders relevante Nährstoffe ab 40</h3>
+
+      <div class="fact-grid">
+        <div class="fact-card">
+          <div class="fact-label">Vitamin D3 + K2</div>
+          <div class="fact-text">Zentral für Knochengesundheit, Immunsystem und Stimmung. Viele Frauen sind unterversorgt, besonders in den Wintermonaten.</div>
+        </div>
+        <div class="fact-card">
+          <div class="fact-label">Magnesium</div>
+          <div class="fact-text">Unterstützt Schlaf, Muskelfunktion und Stressregulation. Besonders relevant bei Erschöpfung und Schlafstörungen.</div>
+        </div>
+        <div class="fact-card">
+          <div class="fact-label">Omega-3</div>
+          <div class="fact-text">Wirkt entzündungshemmend, unterstützt Herz-Kreislauf, Gehirn und Gelenkgesundheit. EPA und DHA aus Fischöl sind gut verfügbar.</div>
+        </div>
+        <div class="fact-card">
+          <div class="fact-label">B-Vitamine</div>
+          <div class="fact-text">Wichtig für Energiestoffwechsel, Nervensystem und Stimmung. B12 wird ab 50 schlechter aufgenommen.</div>
+        </div>
+      </div>
+
+      <h3 class="article-h3">Die wichtigste Regel</h3>
+      <p class="article-text">Lass deinen Status messen, bevor du supplementierst. Ein Blutbild gibt Klarheit darüber, was tatsächlich fehlt – und verhindert sinnlose Ausgaben und im schlimmsten Fall Überdosierungen. Supplements sind Übergangshilfe und gezielte Unterstützung, keine Dauerlösung.</p>
+    </section>
+
+    <div class="section-divider"></div>
+
+    <!-- 6. GELENKE -->
+    <section class="topic-section" id="gelenke">
+      <div class="topic-header">
+        <div class="topic-icon"><div class="topic-icon-line"></div></div>
+        <div>
+          <div class="topic-eyebrow">Beweglichkeit</div>
+          <h2 class="topic-title">Gelenkgesundheit – <em>was wirklich hilft</em></h2>
+        </div>
+      </div>
+
+      <p class="article-lead">Plötzlich tut alles weh? Das ist kein Zufall – und kein Schicksal. Gelenkbeschwerden rund um die Wechseljahre haben konkrete Ursachen und lassen sich gezielt angehen.</p>
+
+      <p class="article-text">Mehr als die Hälfte aller Frauen erlebt in der Perimenopause Gelenkbeschwerden. Der Grund liegt im sinkenden Östrogenspiegel: Östrogen reguliert den Feuchtigkeitshaushalt im Körper, schützt Gelenke vor Entzündungen und wirkt schmerzlindernd. Wenn Östrogen sinkt, werden Gelenke anfälliger, steifer und schmerzhafter.</p>
+
+      <h3 class="article-h3">Die wichtigsten Einflussfaktoren</h3>
+      <ul class="tip-list">
+        <li>Östrogenabfall: weniger Gelenkschmiere, höhere Entzündungsbereitschaft, gesteigertes Schmerzempfinden</li>
+        <li>Kollagenabfall: Kollagen hält Knorpel, Sehnen und Bänder geschmeidig – ab 40 nimmt es deutlich ab</li>
+        <li>Bewegungsmangel: starre Gelenke werden steifer – sanfte, regelmäßige Bewegung ist das beste Gegenmittel</li>
+        <li>Chronische Entzündungen: oft durch Ernährung, Stress und Schlafmangel verstärkt</li>
+      </ul>
+
+      <h3 class="article-h3">Was konkret hilft</h3>
+      <div class="fact-grid">
+        <div class="fact-card">
+          <div class="fact-label">Entzündungsarme Ernährung</div>
+          <div class="fact-text">Viel Gemüse, wenig Zucker und verarbeitete Lebensmittel, ausreichend Omega-3-Fettsäuren.</div>
+        </div>
+        <div class="fact-card">
+          <div class="fact-label">Kollagen & Vitamin C</div>
+          <div class="fact-text">Kollagenpeptide können die Gelenkmatrix unterstützen – Vitamin C ist für die körpereigene Kollagensynthese nötig.</div>
+        </div>
+        <div class="fact-card">
+          <div class="fact-label">Sanfte Bewegung</div>
+          <div class="fact-text">Yoga, Pilates und Mobilitytraining halten die Gelenke geschmeidig, ohne sie zu überlasten.</div>
+        </div>
+        <div class="fact-card">
+          <div class="fact-label">Faszienarbeit</div>
+          <div class="fact-text">Faszienrollen und gezielte Dehnarbeit lösen Verklebungen und verbessern die Gelenkbeweglichkeit nachhaltig.</div>
+        </div>
+      </div>
+    </section>
+
+    <div class="section-divider"></div>
+
+    <!-- 7. HAUT -->
+    <section class="topic-section" id="haut">
+      <div class="topic-header">
+        <div class="topic-icon"><div class="topic-icon-line"></div></div>
+        <div>
+          <div class="topic-eyebrow">Schönheit & Gesundheit</div>
+          <h2 class="topic-title">Haut, Haare & Bindegewebe – <em>von innen strahlen</em></h2>
+        </div>
+      </div>
+
+      <p class="article-lead">Äußere Veränderungen ab 40 sind sichtbar – und haben innere Ursachen. Wer die Zusammenhänge versteht, kann gezielt gegensteuern.</p>
+
+      <p class="article-text">Haut, Haare und Bindegewebe sind hormonaktiv. Mit sinkendem Östrogen- und Collagenspiegel verändern sie sich: Die Haut wird trockener und dünner, das Bindegewebe verliert an Spannkraft, Haare können feiner werden. Das ist kein unabwendbares Schicksal – aber es erfordert andere Strategien als mit 30.</p>
+
+      <h3 class="article-h3">Die innere Pflege</h3>
+      <ul class="tip-list">
+        <li>Ausreichend Protein: Haare und Haut bestehen aus Proteinen – eine proteinreiche Ernährung ist Basis</li>
+        <li>Kollagen und Vitamin C: unterstützen Hautstruktur, Bindegewebe und Gelenkknorpel</li>
+        <li>Zink und Biotin: wichtig für Haarwachstum und Hautgesundheit</li>
+        <li>Antioxidantien: Vitamin E, Vitamin C und sekundäre Pflanzenstoffe schützen vor oxidativem Stress</li>
+        <li>Ausreichend Wasser: gut hydrierte Haut sieht gesunder und straffer aus</li>
+      </ul>
+
+      <h3 class="article-h3">Was du nach außen tun kannst</h3>
+      <p class="article-text">Sonnenschutz ist das effektivste Anti-Aging-Mittel, das es gibt. Feuchtigkeitspflege, Retinoide und eine sanfte Reinigung unterstützen die Hautbarriere. Weniger ist oft mehr – eine konsequente, einfache Routine schlägt viele aufwändige Produkte.</p>
+
+      <div class="highlight-box">
+        <p>Schönheit ab 40 hat eine andere Qualität: nicht makellos, sondern lebendig. Was von innen strahlt, braucht weniger Korrektur von außen.</p>
+      </div>
+    </section>
+
+    <div class="section-divider"></div>
+
+    <!-- 8. ÖSTROGEN -->
+    <section class="topic-section" id="oestrogen">
+      <div class="topic-header">
+        <div class="topic-icon"><div class="topic-icon-line"></div></div>
+        <div>
+          <div class="topic-eyebrow">Hormonsystem</div>
+          <h2 class="topic-title">Das Hormonsystem – <em>Östrogen, Progesteron & das Gleichgewicht</em></h2>
+        </div>
+      </div>
+
+      <p class="article-lead">Hormone sind Botenstoffe. Sie steuern nahezu alle Körperfunktionen – und ihr Gleichgewicht ist empfindlicher als die meisten denken.</p>
+
+      <p class="article-text">Östrogen und Progesteron arbeiten zusammen: Östrogen baut auf, Progesteron reguliert. In der ersten Zyklushälfte dominiert Östrogen, in der zweiten Progesteron. Gerät dieses Verhältnis aus dem Gleichgewicht, entstehen Symptome, die oft nicht sofort mit Hormonen in Verbindung gebracht werden: Schlafstörungen, Stimmungsschwankungen, Brustspannen, Gewichtszunahme.</p>
+
+      <h3 class="article-h3">Östrogendominanz – wenn das Verhältnis stimmt nicht mehr</h3>
+      <p class="article-text">Östrogendominanz bedeutet nicht zwangsläufig zu viel Östrogen – sondern oft zu wenig Progesteron im Verhältnis. Das kann ab Mitte 40 auftreten, wenn die Progesteronproduktion früher nachlässt als die Östrogensynthese. Typische Zeichen sind PMS-ähnliche Symptome, Wassereinlagerungen, Erschöpfung und Schlafprobleme.</p>
+
+      <h3 class="article-h3">Was das Hormonsystem stabilisiert</h3>
+      <div class="fact-grid">
+        <div class="fact-card">
+          <div class="fact-label">Ernährung</div>
+          <div class="fact-text">Ballaststoffe binden überschüssige Östrogene im Darm. Zucker und Alkohol belasten die Leber, die für den Östrogenabbau zuständig ist.</div>
+        </div>
+        <div class="fact-card">
+          <div class="fact-label">Leber & Darm</div>
+          <div class="fact-text">Die Leber baut Östrogene ab. Ist sie überlastet, werden Hormone nicht optimal verarbeitet. Darmgesundheit ist Hormongesundheit.</div>
+        </div>
+        <div class="fact-card">
+          <div class="fact-label">Stressreduktion</div>
+          <div class="fact-text">Chronischer Stress erhöht Cortisol – das konkurriert mit Progesteron um dieselben Rezeptoren und verschärft das Ungleichgewicht.</div>
+        </div>
+        <div class="fact-card">
+          <div class="fact-label">Schlaf</div>
+          <div class="fact-text">Melatonin und Wachstumshormone werden nachts produziert. Guter Schlaf ist keine Kür – er ist hormonelle Grundversorgung.</div>
+        </div>
+      </div>
+
+      <p class="article-text">Das Hormonsystem ist kein isoliertes System – es reagiert auf alles: Essen, Schlaf, Stress, Bewegung, Beziehungen. Kleine, konsequente Veränderungen wirken oft mehr als einzelne große Eingriffe.</p>
+
+      <div class="disclaimer">Hinweis: Diese Inhalte dienen der allgemeinen Information und ersetzen keine individuelle medizinische Beratung. Bei Verdacht auf eine Hormonstörung empfehlen wir eine gynäkologische Untersuchung mit entsprechendem Blutbild.</div>
+    </section>
+
+  </main>
+</div>
+
+<footer>
+  <div class="footer-logo">She Regulates</div>
+  <p>2025 Hanna Wrobel & Sina Töpfer · sheregulates.de</p>
+  <ul class="footer-links">
+    <li><a href="impressum.html">Impressum</a></li>
+    <li><a href="datenschutz.html">Datenschutz</a></li>
+  </ul>
+</footer>
+
+<script>
+  function toggleMenu() {
+    const nav = document.getElementById('navLinks');
+    const btn = document.getElementById('hamburger');
+    nav.classList.toggle('open');
+    btn.classList.toggle('open');
+  }
+
+  document.querySelectorAll('.nav-links a').forEach(a => {
+    a.addEventListener('click', () => {
+      document.getElementById('navLinks').classList.remove('open');
+      document.getElementById('hamburger').classList.remove('open');
+    });
+  });
+
+  // Sidebar active state on scroll
+  const sections = document.querySelectorAll('.topic-section');
+  const sidebarLinks = document.querySelectorAll('.sidebar-nav a');
+
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        sidebarLinks.forEach(a => a.classList.remove('active'));
+        const active = document.querySelector(`.sidebar-nav a[href="#${entry.target.id}"]`);
+        if (active) active.classList.add('active');
+      }
+    });
+  }, { threshold: 0.3 });
+
+  sections.forEach(s => observer.observe(s));
+</script>
+
+</body>
+</html>
